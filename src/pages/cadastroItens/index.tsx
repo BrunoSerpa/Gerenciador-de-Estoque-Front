@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Text, View } from "react-native";
-import ParamPages from "../../context/ParamPages";
+import ParamPages from "../../interface/ParamPages";
 
 type ItensRouteProp = RouteProp<ParamPages, 'Cadastro de Itens'>;
 

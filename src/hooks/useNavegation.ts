@@ -1,4 +1,4 @@
-import ParamPages from "../context/ParamPages";
+import ParamPages from "../interface/ParamPages";
 import { navigationRef } from "../refs/navigationRef";
 
 export const navigateTo = <RouteName extends keyof ParamPages>(
