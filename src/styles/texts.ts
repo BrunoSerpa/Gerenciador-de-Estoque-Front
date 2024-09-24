@@ -6,7 +6,10 @@ const textoStyle = StyleSheet.create({
     },
     texto2: {
         fontSize: 25
-    }
+    },
+    texto3: {
+        fontSize: 17
+    },
 });
 
 export default textoStyle;
