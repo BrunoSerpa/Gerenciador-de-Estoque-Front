@@ -17,7 +17,6 @@ export default function InputNomes(inputNomes: Props) {
     const [novoNome, setNovoNome] = useState("");
     const [mostrarLista, setMostrarLista] = useState(false);
     const [mostrarNovoInput, setMostrarNovoInput] = useState(false);
-    const [nomeProcurado, setNomeProcurado] = useState("");
 
     useEffect(() => { setMostrarLista(mostrarNovoInput) }, [mostrarNovoInput]);
     useEffect(() => { if (inputNomes.nomes.length === 0) { setNomeSelecionado('') } }, [inputNomes.nomes]);
@@ -29,7 +28,6 @@ export default function InputNomes(inputNomes: Props) {
             inputNomes.set(novosNomes);
             setNovoNome("");
             setNomeSelecionado(nomeEmMaiusculo);
-            setNomeProcurado(nomeEmMaiusculo);
             setTimeout(() => novoNomeRef.current?.focus(), 100);
         } else if (mostrarNovoInput === false) {
             setMostrarNovoInput(true);
@@ -39,12 +37,11 @@ export default function InputNomes(inputNomes: Props) {
 
     const deletarNome = (nome: string) => {
         inputNomes.set(inputNomes.nomes.filter((n) => n !== nome));
-        if (nomeSelecionado === nome) { setNomeSelecionado(""); setNomeProcurado(""); } // Resetar ambos
+        if (nomeSelecionado === nome) { setNomeSelecionado("");}
     };
 
     const selecionarNome = (nome: string) => {
         setNomeSelecionado(nome);
-        setNomeProcurado(nome);
         setMostrarLista(false);
     };
 
