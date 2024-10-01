@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CadastrarProduto } from '../types/Produto';
+import { CadastrarProduto } from '../interface/Produto';
 import URL from './url';
 
 const Produto_URL = `${URL}/produto`;
