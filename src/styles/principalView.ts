@@ -11,7 +11,8 @@ const principalView = StyleSheet.create({
         backgroundColor: theme.marrom1,
         color: theme.branco2,
         fontSize: 25,
-        height: 40,
+        paddingTop: 40,
+        height: 80,
         textAlign: 'center',
         width: '100%'
     }

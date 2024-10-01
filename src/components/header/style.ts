@@ -3,7 +3,7 @@ import { textoStyle, theme } from "../../styles";
 
 export const styleHeader = StyleSheet.create({
     Header: {
-        top:7,
+        top:47,
         left: 20,
         position: 'absolute',
         zIndex: 2
