@@ -54,7 +54,7 @@ export default function InputDefault(inputDefault: Props) {
                     {inputDefault.text}
                 </TextInput>
                 {inputDefault.marcacao && inputDefault.esquerda === undefined &&
-                    <Text style={styleDefault.inputText}>{inputDefault.marcacao}</Text>
+                    <Text style={styleDefault.inputText}> {inputDefault.marcacao}</Text>
                 }
             </View>
         </TouchableWithoutFeedback>
