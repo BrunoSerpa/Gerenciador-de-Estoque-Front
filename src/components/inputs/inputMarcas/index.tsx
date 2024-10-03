@@ -8,6 +8,7 @@ import { Marca } from "../../../interface/Marca";
 interface Props {
     marca: string | number;
     set: (marca: string | number) => void;
+    refresh: number;
 }
 
 
@@ -102,7 +103,7 @@ export default function InputMarca(inputMarca: Props) {
         };
 
         fetchMarcas();
-    }, []);
+    }, [inputMarca.refresh]);
 
 
     const getNomeMarcaById = (id: number) => {

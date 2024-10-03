@@ -14,6 +14,7 @@ export default function FormsProduto() {
 
     const [erro, setErro] = useState('')
     const [sucesso, setSucesso] = useState('')
+    const [refresh, setRefresh] = useState(1)
 
     const cadastrar = async () => {
         setErro('');
@@ -31,10 +32,6 @@ export default function FormsProduto() {
             setErro(prev => prev + 'Insira uma garantia; ');
             cadastrar = false;
         }
-        if (validade === '') {
-            setErro(prev => prev + 'Insira uma validade.');
-            cadastrar = false;
-        }
 
         if (cadastrar === true) {
             const produto = {
@@ -49,6 +46,7 @@ export default function FormsProduto() {
 
             console.log(resposta);
             setErro(resposta.msg)
+            setRefresh(refresh+1)
         }
     };
 
@@ -83,7 +81,7 @@ export default function FormsProduto() {
                     />
                 </View>
                 <View style={styleForms.bloco}>
-                    <InputMarca marca={marca} set={setMarca} />
+                    <InputMarca marca={marca} set={setMarca} refresh={refresh}/>
                     <InputDefault
                         keyboardType="numeric"
                         marcacao="dias"
