@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { styleDefault } from "../style";
 import { theme } from "../../../styles";
 import { listarMarcas } from "../../../services";
 import { Marca } from "../../../interface/Marca";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface Props {
     marca: string | number;
@@ -73,38 +74,44 @@ export default function InputMarca(inputMarca: Props) {
         setMarcaProcurada('');
     }
 
-    useEffect(() => {
-        const fetchMarcas = async () => {
-            try {
-                const response = await listarMarcas();
+    const fetchMarcas = async () => {
+        try {
+            const response = await listarMarcas();
 
-                if (!response || !response.data) {
-                    throw new Error("Resposta da API não é válida.");
-                }
-
-                if (response.data.rows) {
-                    const marcasAjustados = response.data.rows.map((marca: any) => ({
-                        id: marca.id,
-                        nome: marca.nome,
-                    }));
-
-                    setMarcasExistentes(marcasAjustados);
-                } else {
-                    throw new Error("Formato de resposta da API inesperado.");
-                }
-            } catch (err) {
-                console.error("Erro ao buscar marcas:", err);
-                if (err instanceof Error) {
-                    console.log(err.message);
-                } else {
-                    console.log("Erro desconhecido.");
-                }
+            if (!response || !response.data) {
+                throw new Error("Resposta da API não é válida.");
             }
-        };
 
+            if (response.data.rows) {
+                const marcasAjustados = response.data.rows.map((marca: any) => ({
+                    id: marca.id,
+                    nome: marca.nome,
+                }));
+
+                setMarcasExistentes(marcasAjustados);
+            } else {
+                throw new Error("Formato de resposta da API inesperado.");
+            }
+        } catch (err) {
+            console.error("Erro ao buscar marcas:", err);
+            if (err instanceof Error) {
+                console.log(err.message);
+            } else {
+                console.log("Erro desconhecido.");
+            }
+        }
+    };
+
+    
+    useEffect(() => {
         fetchMarcas();
     }, [inputMarca.refresh]);
-
+    
+    useFocusEffect(
+        useCallback(() => {
+            fetchMarcas();
+        }, [])
+    );
 
     const getNomeMarcaById = (id: number) => {
         const marca = marcasExistentes.find(marca => marca.id === id);

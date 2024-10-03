@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 import { styleDefault } from "../style";
 import { theme } from "../../../styles";
 import { Nome } from "../../../interface/Nome";
 import { listarNomes } from "../../../services";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface Props {
     id_nome: number;
@@ -53,12 +54,12 @@ export default function InputProduto(inputProduto: Props) {
 
     const escolherProduto = () => {
         if (produtoProcurado.trim() === '') return;
-    
+
         const produtoProcuradoSemAcento = removerAcentos(produtoProcurado);
         const primeiroProduto = produtosExistentes.find(produto =>
             removerAcentos(produto.nome).toUpperCase().includes(produtoProcuradoSemAcento.toUpperCase())
         );
-    
+
         if (primeiroProduto) {
             inputProduto.set(primeiroProduto.id_produto);
             setProdutoProcurado(primeiroProduto.nome);
@@ -69,38 +70,44 @@ export default function InputProduto(inputProduto: Props) {
         }
     };
 
-    useEffect(() => {
-        const fetchNomes = async () => {
-            try {
-                const response = await listarNomes();
+    const fetchNomes = async () => {
+        try {
+            const response = await listarNomes();
 
-                if (!response || !response.data) {
-                    throw new Error("Resposta da API não é válida.");
-                }
-
-                if (response.data.rows) {
-                    const nomesAjustados = response.data.rows.map((nome: any) => ({
-                        id: nome.id,
-                        id_produto: nome.id_produto,
-                        nome: nome.nome
-                    }));
-
-                    setProdutosExistentes(nomesAjustados);
-                } else {
-                    throw new Error("Formato de resposta da API inesperado.");
-                }
-            } catch (err) {
-                console.error("Erro ao buscar nomes:", err);
-                if (err instanceof Error) {
-                    console.log(err.message);
-                } else {
-                    console.log("Erro desconhecido.");
-                }
+            if (!response || !response.data) {
+                throw new Error("Resposta da API não é válida.");
             }
-        };
 
+            if (response.data.rows) {
+                const nomesAjustados = response.data.rows.map((nome: any) => ({
+                    id: nome.id,
+                    id_produto: nome.id_produto,
+                    nome: nome.nome
+                }));
+
+                setProdutosExistentes(nomesAjustados);
+            } else {
+                throw new Error("Formato de resposta da API inesperado.");
+            }
+        } catch (err) {
+            console.error("Erro ao buscar nomes:", err);
+            if (err instanceof Error) {
+                console.log(err.message);
+            } else {
+                console.log("Erro desconhecido.");
+            }
+        }
+    };
+
+    useEffect(() => {
         fetchNomes();
-    }, [])
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchNomes();
+        }, [])
+    );
 
     useEffect(() => {
         if (inputProduto.idInicial !== 0) {
@@ -163,7 +170,7 @@ export default function InputProduto(inputProduto: Props) {
                         <Text style={styleDefault.viewItemLista}>Produto não encontrado</Text>
                     )}
                 </ScrollView>
-                
+
             )}
         </View>
     );
