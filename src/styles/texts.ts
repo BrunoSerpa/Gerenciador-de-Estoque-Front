@@ -10,6 +10,9 @@ const textoStyle = StyleSheet.create({
     texto3: {
         fontSize: 17
     },
+    text4: {
+        fontSize: 30
+    }
 });
 
 export default textoStyle;
