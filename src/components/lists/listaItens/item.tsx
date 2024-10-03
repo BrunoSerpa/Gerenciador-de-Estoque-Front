@@ -30,7 +30,7 @@ export default function Item(item: Props) {
         <View style={styleItem.viewLinha}>
             <Text style={[styleItem.textItem, styleItem.widthId]}>{item.item.id}</Text>
             <View style={styleItem.separator} />
-            <Text style={[styleItem.textItem, styleItem.widthPreco]}>{item.item.preco}</Text>
+            <Text style={[styleItem.textItem, styleItem.widthPreco]}>R${item.item.preco.toFixed(2)}</Text>
             <View style={styleItem.separator} />
             <Text style={[styleItem.textItem, styleItem.widthDataCadastro]}>{formatarData(item.item.data_compra)}</Text>
             <View style={styleItem.separator} />
