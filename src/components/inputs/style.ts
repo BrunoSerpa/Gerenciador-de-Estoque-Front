@@ -38,6 +38,12 @@ export const styleDefault = StyleSheet.create({
         width: 20
     },
 
+    fecharIcon: {
+        marginHorizontal: 10,
+        width: 20,
+        height: 20,
+    },
+
     divisorItemContainer: {
         backgroundColor: theme.preto1,
         height: 1.5,
@@ -121,6 +127,14 @@ export const styleDefault = StyleSheet.create({
         borderRadius: 3,
         width: "100%",
         maxHeight: 150
+    },
+
+    viewFechar: {
+        alignItems: 'flex-end',
+        display: 'flex',
+        marginBottom: 20,
+        marginTop: -31.5,
+        width: '100%'
     },
 
     viewItemLista: {
