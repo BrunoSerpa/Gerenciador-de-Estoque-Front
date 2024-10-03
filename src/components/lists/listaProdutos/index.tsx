@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, View, Modal, Pressable, Image, } from "react-native";
 import { listarProdutos } from "../../../services";
 import { VisualizarProduto } from "../../../interface/Produto";
@@ -7,6 +7,7 @@ import Carregando from "../../carregando";
 import Titulo from "./titulo";
 import Item from "./item";
 import ListaItem from "../../../pages/listaItem";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ListaProdutos() {
     const [produtos, setProdutos] = useState<VisualizarProduto[] | undefined>(undefined);
@@ -15,15 +16,21 @@ export default function ListaProdutos() {
         nome: string
     } | undefined>(undefined)
     const [refresh, setRefresh] = useState(false);
+
+    const listar = async () => {
+        const resposta = await listarProdutos();
+        console.log(resposta);
+        setProdutos(resposta.data.rows);
+    };
     useEffect(() => {
-        const listar = async () => {
-            const resposta = await listarProdutos();
-            console.log(resposta);
-            setProdutos(resposta.data.rows);
-        };
         listar();
         setRefresh(false);
     }, [refresh]);
+    useFocusEffect(
+        useCallback(() => {
+            listar();
+        }, [])
+    );
 
     useEffect(() => {
         if (listarItens === undefined) {
