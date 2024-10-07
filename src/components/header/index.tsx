@@ -15,7 +15,7 @@ function Menu() {
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
         }).start();
-        setShowHamburguer(!showHamburguer); // Alterna a visibilidade do menu
+        setShowHamburguer(!showHamburguer);
     };
 
     const rotateInterpolate = rotation.interpolate({
@@ -45,6 +45,13 @@ function Menu() {
                 </TouchableOpacity>
                 <View style={styleHeader.Divisor} />
                 <TouchableOpacity onPress={() => {
+                    navigateTo('Cadastro em Lote');
+                    toggleHamburguer();
+                }}>
+                    <Text style={styleHeader.Text}>Cadastro em Lote</Text>
+                </TouchableOpacity>
+                <View style={styleHeader.Divisor} />
+                <TouchableOpacity onPress={() => {
                     navigateTo('Cadastro de Itens');
                     toggleHamburguer();
                 }}>
@@ -61,7 +68,7 @@ function Menu() {
                 <TouchableOpacity onPress={() => {
                     navigateTo('Lista de Produtos');
                     toggleHamburguer();
-                    }}>
+                }}>
                     <Text style={styleHeader.Text}>Lista de Produtos</Text>
                 </TouchableOpacity>
             </View>
