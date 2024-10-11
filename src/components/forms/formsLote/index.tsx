@@ -5,25 +5,80 @@ import { theme } from "../../../styles";
 import { styleForms } from "../style";
 import { cadastrarCadastro } from "../../../services";
 
+interface PropsProduto {
+    idProduto: number;
+    preco: string;
+    quantidade: string;
+}
+
 export default function FormsLote() {
     const [titulo, setTitulo] = useState('');
-    const [idProduto, setIdProduto] = useState<number>(0);
-    const [frete, setFrete] = useState('');
     const [dataCadastro, setDataCadastro] = useState(new Date());
-    const [preco, setPreco] = useState('');
-    const [quantidade, setQuantidade] = useState('');
+    const [produtos, setProdutos] = useState<PropsProduto[]>([{
+        idProduto: 0,
+        preco: '',
+        quantidade: '1'
+    }])
+    const [frete, setFrete] = useState('');
 
     const [erro, setErro] = useState('')
     const [sucesso, setSucesso] = useState('')
 
+    const setPreco = (index: number, preco: string) => {
+        setProdutos((prevProdutos) => {
+            const updatedProdutos = [...prevProdutos];
+            updatedProdutos[index].preco = preco;
+            return updatedProdutos;
+        });
+    };
+
+    const setIdProduto = (index: number, idProduto: number) => {
+        setProdutos((prevProdutos) => {
+            const updatedProdutos = [...prevProdutos];
+            updatedProdutos[index].idProduto = idProduto;
+            return updatedProdutos;
+        });
+    };
+
+    const setQuantidade = (index: number, quantidade: string) => {
+        setProdutos((prevProdutos) => {
+            const updatedProdutos = [...prevProdutos];
+            updatedProdutos[index].quantidade = quantidade;
+            return updatedProdutos;
+        });
+    };
+
+    const adicionarProduto = () => {
+        setProdutos((prevProdutos) => [
+            ...prevProdutos,
+            {
+                idProduto: 0,
+                preco: '',
+                quantidade: '1'
+            },
+        ]);
+    };
     const cadastrar = async () => {
         setErro('');
         setSucesso('')
         let cadastrar = true;
 
-        if (idProduto === 0) {
-            setErro('Insira um produto; ');
-            cadastrar = false;
+
+        for (let index = 0; index < produtos.length; index++) {
+            const produto = produtos[index];
+            if (produto.idProduto === 0) {
+                setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
+                cadastrar = false;
+            }
+            if (produto.preco === '') {
+                setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
+                cadastrar = false;
+            }
+
+            if (produto.quantidade === '' || produto.quantidade === '0') {
+                setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
+                cadastrar = false;
+            }
         }
 
         if (!dataCadastro) {
@@ -31,24 +86,21 @@ export default function FormsLote() {
             cadastrar = false;
         }
 
-        if (preco === '') {
-            setErro(prev => prev + 'Insira um preço; ');
-            cadastrar = false;
-        }
-
-        if (quantidade === '') {
-            setErro(prev => prev + 'Insira uma quantidade; ');
-            cadastrar = false;
-        }
 
         if (cadastrar === true) {
-            const item = {
-                id_produto: idProduto,
-                preco: Number(preco.replace(',', '.'))
-            }
             const itens = []
-            for (var i = 0; i < Number(quantidade); i++) {
-                itens.push(item)
+            if (produtos) {
+                for (let index = 0; index < produtos.length; index++) {
+                    const produto = produtos[index];
+                    const item = {
+                        id_produto: produto.idProduto,
+                        preco: Number(produto.preco.replace(',', '.'))
+                    }
+                    for (var i = 0; i < Number(produto.quantidade); i++) {
+                        itens.push(item)
+                    }
+
+                }
             }
 
             const cadastro = {
@@ -59,7 +111,6 @@ export default function FormsLote() {
             }
 
             const resposta = await cadastrarCadastro(cadastro);
-
             console.log(resposta);
             setErro(resposta.msg)
         }
@@ -71,10 +122,8 @@ export default function FormsLote() {
             setErro('')
 
             setTitulo('');
-            setIdProduto(0);
+            setProdutos([])
             setFrete('');
-            setPreco('');
-            setQuantidade('');
             setDataCadastro(new Date());
         }
     }, [erro])
@@ -98,29 +147,46 @@ export default function FormsLote() {
                     />
                 </View>
             </View>
-            <InputProduto
-                id_nome={idProduto}
-                set={setIdProduto}
-                idInicial={0}
-            />
-            <InputDefault
-                esquerda
-                keyboardType="number-pad"
-                marcacao="R$"
-                obrigatorio
-                placeholder="0,00"
-                set={setPreco}
-                text={preco}
-                title="Preço"
-            />
-            <InputDefault
-                keyboardType="numeric"
-                obrigatorio
-                placeholder="0"
-                set={setQuantidade}
-                text={quantidade}
-                title="Quantidade"
-            />
+            <View>
+                <View>
+                    {produtos.map((produto, index) => (
+                        <View key={index}>
+                            <InputProduto
+                                id_nome={produto.idProduto}
+                                set={(id) => setIdProduto(index, id)}
+                                idInicial={0}
+                            />
+                            <InputDefault
+                                esquerda
+                                keyboardType="number-pad"
+                                marcacao="R$"
+                                obrigatorio
+                                placeholder="0,00"
+                                set={(preco) => setPreco(index, preco)}
+                                text={produto.preco}
+                                title="Preço"
+                            />
+                            <InputDefault
+                                keyboardType="numeric"
+                                obrigatorio
+                                placeholder="0"
+                                set={(quantidade) => setQuantidade(index, quantidade)}
+                                text={produto.quantidade}
+                                title="Quantidade"
+                            />
+                        </View>
+                    ))}
+                </View>
+                <Button
+                    background={theme.verde1}
+                    backgroundPress={theme.verde2}
+                    color={theme.branco2}
+                    onPress={adicionarProduto}
+                    style={styleForms.botao}
+                    title="Adicionar Produto"
+                    width={'100%'}
+                />
+            </View>
             <View style={styleForms.viewBotao}>
                 <Button
                     background={theme.verde1}
