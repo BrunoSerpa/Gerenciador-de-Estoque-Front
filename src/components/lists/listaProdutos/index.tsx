@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, View, Modal, Pressable, Image, } from "react-native";
+import { ScrollView } from "react-native";
 import { listarProdutos } from "../../../services";
 import { VisualizarProduto } from "../../../interface/Produto";
 import { styleLista } from "../style";
