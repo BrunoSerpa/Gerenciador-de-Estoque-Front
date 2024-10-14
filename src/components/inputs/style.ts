@@ -118,7 +118,8 @@ export const styleDefault = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         gap: 5,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        width: '100%',
     },
 
     viewLista: {
