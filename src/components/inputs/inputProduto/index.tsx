@@ -11,6 +11,7 @@ interface Props {
     id_nome: number;
     set: (id_nome: number) => void;
     idInicial: number;
+    title?: boolean
 };
 
 
@@ -120,10 +121,12 @@ export default function InputProduto(inputProduto: Props) {
 
     return (
         <View style={styleDefault.viewPrincipal}>
-            <View style={styleDefault.viewinputTitle}>
-                <Text style={styleDefault.inputTitle}>Produto</Text>
-                <Text style={styleDefault.obrigatorio}>*</Text>
-            </View>
+            {(inputProduto.title == undefined || inputProduto.title == true) &&
+                <View style={styleDefault.viewinputTitle}>
+                    <Text style={styleDefault.inputTitle}>Produto</Text>
+                    <Text style={styleDefault.obrigatorio}>*</Text>
+                </View>
+            }
 
             {inputProduto.id_nome !== 0 ? (
                 <View style={styleDefault.viewTextSelected}>
