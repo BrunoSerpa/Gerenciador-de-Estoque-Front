@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { CadastroItens, CadastroProduto, HistoricoCadastro, ListaProduto } from '../pages';
+import { AtualizarCadastro, CadastroItens, CadastroProduto, HistoricoCadastro, ListaProduto } from '../pages';
 import { ParamListBase } from '@react-navigation/native';
 import CadastroLote from '../pages/cadastroLote';
 
@@ -31,6 +31,11 @@ export default function Routes() {
             <Stack.Screen
                 name="Cadastro em Lote"
                 component={CadastroLote}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Atualizar Cadastro"
+                component={AtualizarCadastro}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

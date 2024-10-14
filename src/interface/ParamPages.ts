@@ -5,4 +5,5 @@ export default interface ParamPages {
     "Cadastro de Produto": {};
     "Cadastro de Itens": { produtoId?: number };
     "Cadastro em Lote": {};
+    "Atualizar Cadastro": { cadastroId: number };
 };
