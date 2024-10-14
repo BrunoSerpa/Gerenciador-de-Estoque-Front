@@ -2,6 +2,7 @@ import { View, Text, Image, Pressable } from "react-native";
 import { styleItem } from "../style";
 import { excluirCadastro } from "../../../services";
 import { VisualizarCadastro } from "../../../interface/Cadastro";
+import { navigateTo } from "../../../hooks/useNavegation";
 
 interface Props {
     cadastro: VisualizarCadastro;
@@ -33,6 +34,15 @@ export default function Item(item: Props) {
             <Text style={[styleItem.textItem, styleItem.widthDataCadastro]}>{formatarData(item.cadastro.data_cadastro)}</Text>
             <View style={styleItem.separator} />
             <Text style={[styleItem.textItem, styleItem.widthTotal]}>R${item.cadastro.total} </Text>
+            <View style={styleItem.separator} />
+            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                <Pressable onPress={() => navigateTo('Atualizar Cadastro', {cadastroId: item.cadastro.id})}>
+                    <Image
+                        source={require("../../../../assets/pencil.png")}
+                        style={styleItem.funcoesIcons}
+                    />
+                </Pressable>
+            </View>
             <View style={styleItem.separator} />
             <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
                 <Pressable onPress={deletarCadastro}>

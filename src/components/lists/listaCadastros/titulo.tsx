@@ -10,6 +10,8 @@ export default function Titulo() {
             <View style={styleTitulo.separator} />
             <Text style={[styleTitulo.textTitulo, styleTitulo.widthTotal]}>Total</Text>
             <View style={styleTitulo.separator} />
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Editar </Text>
+            <View style={styleTitulo.separator} />
             <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Excluir </Text>
         </View>
     );
