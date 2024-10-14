@@ -4,7 +4,7 @@ import { navigateTo } from '../../hooks/useNavegation';
 import { styleHeader } from './style';
 
 function Menu() {
-    const [showHamburguer, setShowHamburguer] = useState(true);
+    const [showHamburguer, setShowHamburguer] = useState(false);
 
     const rotation = useRef(new Animated.Value(0)).current;
 
