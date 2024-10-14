@@ -13,6 +13,6 @@ export const styleCarregando = StyleSheet.create({
     textCarregando: {
         color: theme.preto1,
         textAlign: 'center',
-        ...textoStyle.text4,
+        ...textoStyle.texto4,
     }
 })
