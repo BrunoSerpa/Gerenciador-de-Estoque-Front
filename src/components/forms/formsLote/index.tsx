@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { Button, InputDataCheckout, InputDefault, InputProduto } from "../../inputs";
+import { Image, Pressable, Text, View } from "react-native";
+import { Button, InputDataCheckout, InputDefault } from "../../inputs";
 import { theme } from "../../../styles";
 import { styleForms } from "../style";
 import { cadastrarCadastro } from "../../../services";
+import ItemLote from "./item";
+import TítuloLote from "./titulo";
 
 interface PropsProduto {
     idProduto: number;
@@ -58,6 +60,11 @@ export default function FormsLote() {
             },
         ]);
     };
+
+    const removerProduto = (index: number) => {
+        setProdutos((prevProdutos) => prevProdutos.filter((_, i) => i !== index));
+    };
+
     const cadastrar = async () => {
         setErro('');
         setSucesso('')
@@ -122,7 +129,11 @@ export default function FormsLote() {
             setErro('')
 
             setTitulo('');
-            setProdutos([])
+            setProdutos([{
+                idProduto: 0,
+                preco: '',
+                quantidade: '1'
+            }])
             setFrete('');
             setDataCadastro(new Date());
         }
@@ -147,45 +158,40 @@ export default function FormsLote() {
                     />
                 </View>
             </View>
-            <View>
+            <View style={styleForms.viewForms}>
+                <TítuloLote />
                 <View>
                     {produtos.map((produto, index) => (
-                        <View key={index}>
-                            <InputProduto
-                                id_nome={produto.idProduto}
-                                set={(id) => setIdProduto(index, id)}
-                                idInicial={0}
+                        <View key={index} style={styleForms.viewFlex}>
+                            <ItemLote
+                                produto={produto}
+                                index={index}
+                                setIdProduto={setIdProduto}
+                                setPreco={setPreco}
+                                setQuantidade={setQuantidade}
                             />
-                            <InputDefault
-                                esquerda
-                                keyboardType="number-pad"
-                                marcacao="R$"
-                                obrigatorio
-                                placeholder="0,00"
-                                set={(preco) => setPreco(index, preco)}
-                                text={produto.preco}
-                                title="Preço"
-                            />
-                            <InputDefault
-                                keyboardType="numeric"
-                                obrigatorio
-                                placeholder="0"
-                                set={(quantidade) => setQuantidade(index, quantidade)}
-                                text={produto.quantidade}
-                                title="Quantidade"
-                            />
+                            {index !== 0 &&
+                                <Pressable onPress={() => removerProduto(index)} style={styleForms.viewExcluir}>
+                                    <Image
+                                        source={require("../../../../assets/trash.png")}
+                                        style={styleForms.excluirIcon}
+                                    />
+                                </Pressable>
+                            }
                         </View>
                     ))}
                 </View>
-                <Button
-                    background={theme.verde1}
-                    backgroundPress={theme.verde2}
-                    color={theme.branco2}
-                    onPress={adicionarProduto}
-                    style={styleForms.botao}
-                    title="Adicionar Produto"
-                    width={'100%'}
-                />
+                <View style={styleForms.viewAdicionar}>
+                    <Button
+                        background={theme.verde1}
+                        backgroundPress={theme.verde2}
+                        color={theme.branco2}
+                        onPress={adicionarProduto}
+                        style={styleForms.botaoAdicionar}
+                        title="Adicionar Produto"
+                        width={'100%'}
+                    />
+                </View>
             </View>
             <View style={styleForms.viewBotao}>
                 <Button
