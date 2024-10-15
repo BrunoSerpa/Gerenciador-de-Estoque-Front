@@ -1,3 +1,8 @@
+interface AtualizarItem {
+    id_produto: number;
+    preco: number;
+};
+
 interface Item {
     id: number;
     id_cadastro: number;
@@ -17,4 +22,4 @@ interface VisualizarItem {
     preco: number;
 };
 
-export { Item, CadastrarItem, VisualizarItem };
+export { AtualizarItem, CadastrarItem, Item, VisualizarItem };
