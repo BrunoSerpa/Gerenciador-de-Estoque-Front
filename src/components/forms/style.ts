@@ -14,36 +14,10 @@ export const styleForms = StyleSheet.create({
         paddingHorizontal: 30,
         paddingVertical: 3,
     },
-    viewAdicionar: {
-        width: "90%",
-        marginTop: 2
-    },
     botaoAdicionar: {
         paddingHorizontal: 30,
         paddingVertical: 3,
         ...textoStyle.texto3
-    },
-    viewBotao: {
-        alignItems: 'center',
-        display: 'flex',
-        marginTop: 50,
-    },
-    viewPrincipal: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 10
-    },
-    viewFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    viewForms: {
-        marginTop: 20,
-        marginLeft: 10
-    },
-    viewExcluir: {
-        width: 90
     },
     excluirIcon: {
         marginRight: 4,
@@ -59,23 +33,56 @@ export const styleForms = StyleSheet.create({
         color: theme.preto1,
         textAlign: 'center',
         ...textoStyle.texto1
-    }
+    },
+    viewAdicionar: {
+        width: "90%",
+        marginTop: 2
+    },
+    viewBotao: {
+        alignItems: 'center',
+        display: 'flex',
+        marginTop: 50,
+    },
+    viewBotoes: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 5,
+        justifyContent: 'space-evenly',
+    },
+    viewExcluir: {
+        width: 90
+    },
+    viewFlex: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    viewForms: {
+        marginTop: 20,
+        marginLeft: 5
+    },
+    viewPrincipal: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10
+    },
 });
 
 const constList = StyleSheet.create({
-    widthProduto: {
-        flex: 1,
-    },
-    widhtPreco: {
-        width: '28%',
-    },
-    widthQuantidade: {
-        width: '28%',
-    },
     separator: {
         backgroundColor: theme.preto1,
         height: "100%",
         width: 2.5,
+    },
+    widthProduto: {
+        flex: 1,
+    },
+    widhtPreco: {
+        width: '25%',
+    },
+    widthQuantidade: {
+        width: '25%',
     },
 })
 
@@ -85,7 +92,7 @@ export const styleItens = StyleSheet.create({
         borderWidth: 2,
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '92.5%',
     },
     ...constList
 })
@@ -95,10 +102,10 @@ export const styleTitulo = StyleSheet.create({
         borderWidth: 2,
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '92.5%',
     },
     texts: {
-        margin:'auto',
+        margin: 'auto',
         textAlign: 'center',
         fontWeight: '500',
         ...textoStyle.texto3
