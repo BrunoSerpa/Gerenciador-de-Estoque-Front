@@ -22,7 +22,8 @@ export default function ItemLote(itemLote: Props) {
                 <InputProduto
                     id_nome={itemLote.produto.idProduto}
                     set={(id) => itemLote.setIdProduto(itemLote.index, id)}
-                    idInicial={0}
+                    idInicial={itemLote.produto.idProduto}
+                    inicialProduto={true}
                     title={false}
                 />
             </View>
