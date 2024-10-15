@@ -11,6 +11,7 @@ interface Props {
     id_nome: number;
     set: (id_nome: number) => void;
     idInicial: number;
+    inicialProduto?: boolean;
     title?: boolean
 };
 
@@ -90,6 +91,7 @@ export default function InputProduto(inputProduto: Props) {
             } else {
                 throw new Error("Formato de resposta da API inesperado.");
             }
+
         } catch (err) {
             console.error("Erro ao buscar nomes:", err);
             if (err instanceof Error) {
@@ -111,18 +113,23 @@ export default function InputProduto(inputProduto: Props) {
     );
 
     useEffect(() => {
-        if (inputProduto.idInicial !== 0) {
-            const produto = produtosExistentes.find(produto => produto.id === inputProduto.idInicial)
-            setProdutoProcurado(produto?.nome || '')
-            console.log(produtoProcurado)
-            inputProduto.set(produto?.id_produto || 0)
+        if (produtosExistentes.length > 0 && inputProduto.idInicial !== 0) {
+            const procuraNome = inputProduto.inicialProduto ?? false;
+            const produto = produtosExistentes.find(produto => {
+                return procuraNome ?
+                    produto.id_produto === inputProduto.idInicial :
+                    produto.id === inputProduto.idInicial;
+            });
+
+            setProdutoProcurado(produto?.nome || '');
+            inputProduto.set(produto?.id_produto || 0);
         }
-    }, [produtosExistentes, inputProduto.idInicial])
+    }, [produtosExistentes, inputProduto.idInicial]);
 
     return (
         <View style={styleDefault.viewPrincipal}>
-            {(inputProduto.title == undefined || inputProduto.title == true) &&
-                <View style={styleDefault.viewinputTitle}>
+            {(inputProduto.title ?? true) &&
+                <View style={styleDefault.viewInputTitle}>
                     <Text style={styleDefault.inputTitle}>Produto</Text>
                     <Text style={styleDefault.obrigatorio}>*</Text>
                 </View>
