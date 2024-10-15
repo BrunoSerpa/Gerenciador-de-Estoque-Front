@@ -3,9 +3,10 @@ import { Image, Pressable, Text, View } from "react-native";
 import { Button, InputDataCheckout, InputDefault } from "../../inputs";
 import { theme } from "../../../styles";
 import { styleForms } from "../style";
-import { cadastrarCadastro, listarCadastro } from "../../../services";
+import { cadastrarCadastro, excluirCadastro, listarCadastro } from "../../../services";
 import ItemLote from "./item";
 import TítuloLote from "./titulo";
+import { navigateTo } from "../../../hooks/useNavegation";
 
 interface Props {
     idCadastro: number
@@ -44,6 +45,13 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
         setProdutos(produtos)
         console.log(produtos)
     };
+
+    const deletarCadastro = async () => {
+        const excluir = await excluirCadastro(formsAtualizarCadastro.idCadastro)
+        console.log(excluir);
+        navigateTo('Histórico de Cadastro');
+    };
+
     useEffect(() => {
         listar()
     }, [formsAtualizarCadastro.idCadastro])
@@ -224,7 +232,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
                     <Button
                         background={theme.vermelho1}
                         color={theme.branco2}
-                        onPress={cadastrar}
+                        onPress={deletarCadastro}
                         style={styleForms.botao}
                         title="Excluir"
                         width={'100%'}
