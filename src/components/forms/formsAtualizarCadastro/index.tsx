@@ -3,7 +3,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { Button, InputDataCheckout, InputDefault } from "../../inputs";
 import { theme } from "../../../styles";
 import { styleForms } from "../style";
-import { cadastrarCadastro } from "../../../services";
+import { cadastrarCadastro, listarCadastro } from "../../../services";
 import ItemLote from "./item";
 import TítuloLote from "./titulo";
 
@@ -20,14 +20,33 @@ interface PropsProduto {
 export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
     const [titulo, setTitulo] = useState('');
     const [dataCadastro, setDataCadastro] = useState(new Date());
-    const [produtos, setProdutos] = useState<PropsProduto[]>([{
-        idProduto: 0,
-        preco: '',
-        quantidade: '1'
-    }])
+    const [produtos, setProdutos] = useState<PropsProduto[]>([])
     const [frete, setFrete] = useState('');
 
-    useEffect(() => {}, [formsAtualizarCadastro.idCadastro])
+    const listar = async () => {
+        const resposta = await listarCadastro(formsAtualizarCadastro.idCadastro);
+        console.log(resposta)
+        const cadastro = resposta.data.rows[0];
+        setTitulo(cadastro.titulo);
+        setDataCadastro(cadastro.data_cadastro)
+        setFrete(cadastro.frete)
+        const produtos: PropsProduto[] = cadastro.itens.map((item: {
+            id_produto: number;
+            preco: string;
+            quantidade: string;
+        }) => {
+            return {
+                idProduto: item.id_produto,
+                preco: item.preco,
+                quantidade: item.quantidade
+            }
+        })
+        setProdutos(produtos)
+        console.log(produtos)
+    };
+    useEffect(() => {
+        listar()
+    }, [formsAtualizarCadastro.idCadastro])
 
     const [erro, setErro] = useState('')
     const [sucesso, setSucesso] = useState('')
@@ -133,15 +152,6 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
         if (erro == 'Cadastro cadastrada com sucesso') {
             setSucesso(erro)
             setErro('')
-
-            setTitulo('');
-            setProdutos([{
-                idProduto: 0,
-                preco: '',
-                quantidade: '1'
-            }])
-            setFrete('');
-            setDataCadastro(new Date());
         }
     }, [erro])
 
@@ -199,16 +209,27 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
                     />
                 </View>
             </View>
-            <View style={styleForms.viewBotao}>
-                <Button
-                    background={theme.verde1}
-                    backgroundPress={theme.verde2}
-                    color={theme.branco2}
-                    onPress={cadastrar}
-                    style={styleForms.botao}
-                    title="Cadastrar"
-                    width={'50%'}
-                />
+            <View style={styleForms.viewBotoes}>
+                <View style={styleForms.viewBotao}>
+                    <Button
+                        background={theme.amarelo1}
+                        color={theme.preto1}
+                        onPress={cadastrar}
+                        style={styleForms.botao}
+                        title="Cadastrar"
+                        width={'100%'}
+                    />
+                </View>
+                <View style={styleForms.viewBotao}>
+                    <Button
+                        background={theme.vermelho1}
+                        color={theme.branco2}
+                        onPress={cadastrar}
+                        style={styleForms.botao}
+                        title="Excluir"
+                        width={'100%'}
+                    />
+                </View>
             </View>
             <Text style={styleForms.textErro}>{erro}</Text>
             <Text style={styleForms.textSucesso}>{sucesso}</Text>
