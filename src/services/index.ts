@@ -1,4 +1,4 @@
-import { cadastrarCadastro, excluirCadastro, listarCadastros } from "./cadastroServices";
+import { cadastrarCadastro, excluirCadastro, listarCadastro, listarCadastros } from "./cadastroServices";
 import { excluirItem, listarItens } from "./itensServices";
 import { listarMarcas } from "./marcasServices";
 import { listarNomes } from "./nomesServices";
@@ -10,6 +10,7 @@ export {
     excluirCadastro,
     excluirItem,
     excluirProduto,
+    listarCadastro,
     listarCadastros,
     listarMarcas,
     listarNomes,

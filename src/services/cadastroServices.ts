@@ -14,6 +14,15 @@ const cadastrarCadastro = async (cadastroData: CadastrarCadastro) => {
   };
 };
 
+const listarCadastro = async (id: number) => {
+  try {
+    const response = await axios.get(`${Cadastro_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  };
+};
+
 const listarCadastros = async () => {
   try {
     const response = await axios.get(`${Cadastro_URL}`);
@@ -25,8 +34,7 @@ const listarCadastros = async () => {
 
 const excluirCadastro = async (id: number) => {
   try {
-    const response = await axios.delete(`${Cadastro_URL}/${id}`, {
-    });
+    const response = await axios.delete(`${Cadastro_URL}/${id}`);
     return response.data;
   } catch (error) {
     console.error('Erro ao deletar :', error);
@@ -34,4 +42,4 @@ const excluirCadastro = async (id: number) => {
   }
 };
 
-export {cadastrarCadastro, listarCadastros, excluirCadastro}
+export { cadastrarCadastro, listarCadastro, listarCadastros, excluirCadastro }
