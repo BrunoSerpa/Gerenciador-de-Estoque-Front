@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View, Image, Pressable, TouchableOpacity, Platform } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styleDefault } from "../style";
@@ -24,7 +24,7 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
         }
     };
 
-    function handleDateChange(event: any, selectedDate: Date | undefined) {
+    function handleDateChange(_event: any, selectedDate: Date | undefined) {
         if (selectedDate) {
             inputDataCheckout.set(selectedDate);
         }
@@ -32,6 +32,12 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
             setIsPickerVisible(false);
         }
     }
+
+    useEffect(() => {
+        if (inputDataCheckout.data !== today) {
+            setIsDateLocked(false);
+        }
+    }, [inputDataCheckout.data]);
 
     const formatDate = (date: Date) => {
         return format(date, "dd/MM/yyyy");
