@@ -120,7 +120,7 @@ export default function InputMarca(inputMarca: Props) {
 
     return (
         <View style={styleDefault.viewPrincipal}>
-            <View style={styleDefault.viewinputTitle}>
+            <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>Marca</Text>
             </View>
 

@@ -33,7 +33,7 @@ export default function InputDefault(inputDefault: Props) {
         }]}>
 
         {inputDefault.title &&
-            <View style={styleDefault.viewinputTitle}>
+            <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>{inputDefault.title}</Text>
                 {
                     inputDefault.obrigatorio &&

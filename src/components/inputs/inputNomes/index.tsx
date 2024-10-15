@@ -47,7 +47,7 @@ export default function InputNomes(inputNomes: Props) {
 
     return (
         <View style={styleDefault.viewPrincipal}>
-            <View style={styleDefault.viewinputTitle}>
+            <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>Nome</Text>
                 <Text style={styleDefault.obrigatorio}>*</Text>
             </View>

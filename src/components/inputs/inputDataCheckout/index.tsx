@@ -44,7 +44,7 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
 
     return (
         <View style={[styleDefault.viewPrincipal, { maxWidth: inputDataCheckout.tamanhoInput || 200 }]}>
-            <View style={styleDefault.viewinputTitle}>
+            <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>{inputDataCheckout.title}</Text>
                 <Text style={styleDefault.obrigatorio}>*</Text>
             </View>
