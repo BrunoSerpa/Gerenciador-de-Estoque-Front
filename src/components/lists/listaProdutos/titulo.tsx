@@ -18,6 +18,8 @@ export default function Titulo() {
             <View style={styleTitulo.separator} />
             <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Itens </Text>
             <View style={styleTitulo.separator} />
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Editar </Text>
+            <View style={styleTitulo.separator} />
             <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Excluir </Text>
         </View>
     );

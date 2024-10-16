@@ -4,6 +4,7 @@ import { VisualizarProduto } from "../../../interface/Produto";
 import { styleItem } from "../style";
 import { Picker } from "@react-native-picker/picker";
 import { excluirProduto } from "../../../services";
+import { navigateTo } from "../../../hooks/useNavegation";
 
 interface Props {
     produto: VisualizarProduto;
@@ -79,6 +80,15 @@ export default function Item(item: Props) {
                 })}>
                     <Image
                         source={require("../../../../assets/items.png")}
+                        style={styleItem.funcoesIcons}
+                    />
+                </Pressable>
+            </View>
+            <View style={styleItem.separator} />
+            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                <Pressable onPress={() => navigateTo('Atualizar Produto', {produtoId: item.produto.id})}>
+                    <Image
+                        source={require("../../../../assets/pencil.png")}
                         style={styleItem.funcoesIcons}
                     />
                 </Pressable>
