@@ -18,6 +18,14 @@ interface CadastrarProduto {
     validade?: number;
 };
 
+interface AtualizarProduto {
+    nomes: string[];
+    marca?: number | string;
+    garantia: number;
+    preco: number;
+    validade?: number;
+};
+
 interface VisualizarProduto {
     id: number;
     nomes: NomeVisualizar[];
@@ -28,4 +36,4 @@ interface VisualizarProduto {
     marca?: Marca;
 };
 
-export { Produto, CadastrarProduto, VisualizarProduto };
+export { Produto, AtualizarProduto, CadastrarProduto, VisualizarProduto };
