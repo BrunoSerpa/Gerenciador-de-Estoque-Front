@@ -2,9 +2,10 @@ import { atualizarCadastro, cadastrarCadastro, excluirCadastro, listarCadastro, 
 import { excluirItem, listarItens } from "./itensServices";
 import { listarMarcas } from "./marcasServices";
 import { listarNomes } from "./nomesServices";
-import { cadastrarProduto, excluirProduto, listarProduto, listarProdutos } from "./produtoServices";
+import { atualizarProduto, cadastrarProduto, excluirProduto, listarProduto, listarProdutos } from "./produtoServices";
 
 export {
+    atualizarProduto,
     atualizarCadastro,
     cadastrarCadastro,
     cadastrarProduto,

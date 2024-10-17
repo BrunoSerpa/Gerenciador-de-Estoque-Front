@@ -1,9 +1,18 @@
 import axios from 'axios';
 
-import { CadastrarProduto } from '../interface/Produto';
+import { AtualizarProduto, CadastrarProduto } from '../interface/Produto';
 import URL from './url';
 
 const Produto_URL = `${URL}/produto`;
+
+const atualizarProduto = async (atualizarData: AtualizarProduto, id: number) => {
+  try {
+    const response = await axios.patch(`${Produto_URL}/${id}`, atualizarData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  };
+};
 
 const cadastrarProduto = async (produtoData: CadastrarProduto) => {
   try {
@@ -43,4 +52,4 @@ const excluirProduto = async (id: number) => {
   }
 };
 
-export { cadastrarProduto, listarProduto, listarProdutos, excluirProduto }
+export { atualizarProduto, cadastrarProduto, listarProduto, listarProdutos, excluirProduto }
