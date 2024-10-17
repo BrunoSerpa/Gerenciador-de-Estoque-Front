@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { Button, InputDefault, InputMarca, InputNomes } from "../../inputs";
 import { theme } from "../../../styles";
 import { styleForms } from "../style";
-import { excluirProduto, listarProduto } from "../../../services";
+import { atualizarProduto, excluirProduto, listarProduto } from "../../../services";
 import { navigateTo } from "../../../hooks/useNavegation";
 
 interface Props {
@@ -31,7 +31,7 @@ export default function FormsAtualizarProduto(formsAtualizarProduto: Props) {
             nomesProdutos.push(nome)
         }
         setNomes(nomesProdutos)
-        setPreco(produto.preco);
+        setPreco(produto.preco.replace('$', '').trim());
         setMarca(produto.marca);
         setGarantia(produto.garantia);
         setValidade(produto.validade);
@@ -68,11 +68,9 @@ export default function FormsAtualizarProduto(formsAtualizarProduto: Props) {
                 marca: marca,
                 validade: Number(validade)
             }
-            /* 
-            const resposta = await atualizarProduto(produto);
-
+            const resposta = await atualizarProduto(produto, formsAtualizarProduto.idProduto);
             console.log(resposta);
-            setErro(resposta.msg) */
+            setErro(resposta.msg)
             setRefresh(refresh + 1)
         }
     };
