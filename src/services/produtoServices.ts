@@ -14,6 +14,15 @@ const cadastrarProduto = async (produtoData: CadastrarProduto) => {
   };
 };
 
+const listarProduto = async (id: number) => {
+  try {
+    const response = await axios.get(`${Produto_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  };
+};
+
 const listarProdutos = async () => {
   try {
     const response = await axios.get(`${Produto_URL}`);
@@ -34,4 +43,4 @@ const excluirProduto = async (id: number) => {
   }
 };
 
-export {cadastrarProduto, listarProdutos, excluirProduto}
+export { cadastrarProduto, listarProduto, listarProdutos, excluirProduto }
