@@ -45,6 +45,14 @@ export default function InputNomes(inputNomes: Props) {
         setMostrarLista(false);
     };
 
+    useEffect(() => {
+        if (inputNomes.nomes.length > 0) {
+            setNomeSelecionado(inputNomes.nomes[0]);
+        } else {
+            setNomeSelecionado('');
+        }
+    }, [inputNomes.nomes]);
+
     return (
         <View style={styleDefault.viewPrincipal}>
             <View style={styleDefault.viewInputTitle}>
