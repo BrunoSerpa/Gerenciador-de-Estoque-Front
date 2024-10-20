@@ -1,13 +1,12 @@
 import { NomeVisualizar } from "./Nome";
 import { Marca } from "./Marca";
 
-interface Produto {
-    id: number;
-    id_marca?: number;
+interface AtualizarProduto {
+    nomes: string[];
+    marca?: number | string;
     garantia: number;
-    validade?: number;
     preco: number;
-    quantidade: number;
+    validade?: number;
 };
 
 interface CadastrarProduto {
@@ -18,12 +17,13 @@ interface CadastrarProduto {
     validade?: number;
 };
 
-interface AtualizarProduto {
-    nomes: string[];
-    marca?: number | string;
+interface Produto {
+    id: number;
+    id_marca?: number;
     garantia: number;
-    preco: number;
     validade?: number;
+    preco: number;
+    quantidade: number;
 };
 
 interface VisualizarProduto {
@@ -36,4 +36,4 @@ interface VisualizarProduto {
     marca?: Marca;
 };
 
-export { Produto, AtualizarProduto, CadastrarProduto, VisualizarProduto };
+export { AtualizarProduto, CadastrarProduto, VisualizarProduto, Produto };
