@@ -1,6 +1,23 @@
 import { StyleSheet } from "react-native";
 import { textoStyle, theme } from "../../styles";
 
+const constList = StyleSheet.create({
+    separator: {
+        backgroundColor: theme.preto1,
+        height: "100%",
+        width: 2.5,
+    },
+    widthProduto: {
+        flex: 1,
+    },
+    widhtPreco: {
+        width: '25%',
+    },
+    widthQuantidade: {
+        width: '25%',
+    },
+})
+
 export const styleForms = StyleSheet.create({
     bloco: {
         display: 'flex',
@@ -34,6 +51,13 @@ export const styleForms = StyleSheet.create({
         textAlign: 'center',
         ...textoStyle.texto1
     },
+    textFrete: {
+        margin: 'auto',
+        textAlign: 'center',
+        fontWeight: '500',
+        ...textoStyle.texto3
+    },
+    separador: constList.separator,
     viewAdicionar: {
         width: "90%",
         marginTop: 2
@@ -57,6 +81,11 @@ export const styleForms = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
+    viewFrete: {
+        display: 'flex',
+        flexDirection: 'row',
+        borderLeftWidth: 2
+    },
     viewForms: {
         marginTop: 20,
         marginLeft: 5
@@ -67,24 +96,15 @@ export const styleForms = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 10
     },
+    widthTituloFrete: {
+        borderBottomWidth: 2,
+        width:181,
+    },
+    widthInputFrete: {
+        borderBottomWidth: 2,
+        width:93,
+    },
 });
-
-const constList = StyleSheet.create({
-    separator: {
-        backgroundColor: theme.preto1,
-        height: "100%",
-        width: 2.5,
-    },
-    widthProduto: {
-        flex: 1,
-    },
-    widhtPreco: {
-        width: '25%',
-    },
-    widthQuantidade: {
-        width: '25%',
-    },
-})
 
 export const styleItens = StyleSheet.create({
     viewLinha: {
