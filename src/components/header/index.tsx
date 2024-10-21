@@ -45,6 +45,13 @@ function Menu() {
                 </TouchableOpacity>
                 <View style={styleHeader.Divisor} />
                 <TouchableOpacity onPress={() => {
+                    navigateTo('Cadastro de Venda');
+                    toggleHamburguer();
+                }}>
+                    <Text style={styleHeader.Text}>Cadastro de Venda</Text>
+                </TouchableOpacity>
+                <View style={styleHeader.Divisor} />
+                <TouchableOpacity onPress={() => {
                     navigateTo('Cadastro em Lote');
                     toggleHamburguer();
                 }}>
