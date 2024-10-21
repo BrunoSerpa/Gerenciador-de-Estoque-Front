@@ -1,37 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
-import { listarCadastros } from "../../../services";
+import { listarCadastros, listarVendas } from "../../../services";
 import { styleLista } from "../style";
 import Carregando from "../../carregando";
 import Titulo from "./titulo";
-import Item from "./item";
 import { VisualizarCadastro } from "../../../interface/Cadastro";
 import { useFocusEffect } from "@react-navigation/native";
+import { VisualizarVenda } from "../../../interface/Venda";
+import ItemCadastro from "./itemCompra";
+import ItemVenda from "./itemVenda";
 
 export default function ListaCadastros() {
-    const [cadastros, setCadastro] = useState<VisualizarCadastro[] | undefined>(undefined);
+    const [cadastros, setCadastros] = useState<VisualizarCadastro[] | undefined>(undefined);
+    const [vendas, setVendas] = useState<VisualizarVenda[] | undefined>(undefined);
     const [refresh, setRefresh] = useState(false);
-    const listar = async () => {
+    const listarCadastro = async () => {
         const resposta = await listarCadastros();
         console.log(resposta);
-        setCadastro(resposta.data.rows);
+        setCadastros(resposta.data.rows);
+    };
+
+    const listarVenda = async () => {
+        const resposta = await listarVendas();
+        console.log(resposta);
+        setVendas(resposta.data.rows);
     };
 
     useEffect(() => {
-        listar();
+        listarCadastro();
+        listarVenda();
         setRefresh(false);
     }, [refresh]);
 
     useFocusEffect(
         useCallback(() => {
-            listar();
+            listarCadastro();
+            listarVenda();
         }, [])
     );
 
-
-
     return (
-        cadastros === undefined ?
+        (cadastros === undefined || vendas === undefined) ?
             <Carregando />
             :
             <>
@@ -44,10 +53,17 @@ export default function ListaCadastros() {
                     >
                         <Titulo />
                         {cadastros.map((cadastro) => (
-                            <Item
+                            <ItemCadastro
                                 cadastro={cadastro}
                                 setRefresh={setRefresh}
                                 key={cadastro.id}
+                            />
+                        ))}
+                        {vendas.map((venda) => (
+                            <ItemVenda
+                                venda={venda}
+                                setRefresh={setRefresh}
+                                key={venda.id}
                             />
                         ))}
                     </ScrollView>
