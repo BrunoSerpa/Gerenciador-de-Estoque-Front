@@ -204,6 +204,22 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
                         </View>
                     ))}
                 </View>
+                <View style={styleForms.viewFrete}>
+                    <View style={styleForms.widthTituloFrete}>
+                        <Text style={styleForms.textFrete}>Frete</Text>
+                    </View>
+                    <View style={styleForms.separador} />
+                    <View style={styleForms.widthInputFrete}>
+                        <InputDefault
+                            placeholder="0,00"
+                            set={setFrete}
+                            text={frete}
+                            esquerda
+                            marcacao="R$"
+                        />
+                    </View>
+                    <View style={styleForms.separador} />
+                </View>
                 <View style={styleForms.viewAdicionar}>
                     <Button
                         background={theme.verde1}
