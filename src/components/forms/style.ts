@@ -8,13 +8,13 @@ const constList = StyleSheet.create({
         width: 2.5,
     },
     widthProduto: {
-        flex: 1,
+        width: '50%',
     },
     widhtPreco: {
         width: '25%',
     },
     widthQuantidade: {
-        width: '25%',
+        flex: 1,
     },
 })
 
@@ -51,16 +51,9 @@ export const styleForms = StyleSheet.create({
         textAlign: 'center',
         ...textoStyle.texto1
     },
-    textFrete: {
-        margin: 'auto',
-        textAlign: 'center',
-        fontWeight: '500',
-        ...textoStyle.texto3
-    },
     separador: constList.separator,
     viewAdicionar: {
-        width: "90%",
-        marginTop: 2
+        width: "92.5%",
     },
     viewBotao: {
         alignItems: 'center',
@@ -81,11 +74,6 @@ export const styleForms = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-    viewFrete: {
-        display: 'flex',
-        flexDirection: 'row',
-        borderLeftWidth: 2
-    },
     viewForms: {
         marginTop: 20,
         marginLeft: 5
@@ -97,14 +85,6 @@ export const styleForms = StyleSheet.create({
         gap: 20,
         paddingHorizontal: 10,
         width: '100%'
-    },
-    widthTituloFrete: {
-        borderBottomWidth: 2,
-        width:181,
-    },
-    widthInputFrete: {
-        borderBottomWidth: 2,
-        width:93,
     },
 });
 

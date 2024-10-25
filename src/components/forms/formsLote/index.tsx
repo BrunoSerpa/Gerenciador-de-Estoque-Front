@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import { Button, InputDataCheckout, InputDefault } from "../../inputs";
+import { Button, InputDataCheckout, InputDefault, BlocoFrete } from "../../inputs";
 import { theme } from "../../../styles";
 import { styleForms } from "../style";
 import { cadastrarCadastro } from "../../../services";
@@ -181,22 +181,10 @@ export default function FormsLote() {
                         </View>
                     ))}
                 </View>
-                <View style={styleForms.viewFrete}>
-                    <View style={styleForms.widthTituloFrete}>
-                        <Text style={styleForms.textFrete}>Frete</Text>
-                    </View>
-                    <View style={styleForms.separador} />
-                    <View style={styleForms.widthInputFrete}>
-                        <InputDefault
-                            placeholder="0,00"
-                            set={setFrete}
-                            text={frete}
-                            esquerda
-                            marcacao="R$"
-                        />
-                    </View>
-                    <View style={styleForms.separador} />
-                </View>
+                <BlocoFrete
+                    setFrete={setFrete}
+                    frete={frete}
+                />
                 <View style={styleForms.viewAdicionar}>
                     <Button
                         background={theme.verde1}
