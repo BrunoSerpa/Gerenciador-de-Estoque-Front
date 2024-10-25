@@ -34,7 +34,15 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
     }
 
     useEffect(() => {
-        if (inputDataCheckout.data !== today) {
+        const isSameDate = (date1: Date, date2: Date) => {
+            return (
+                date1.getDate() === date2.getDate() &&
+                date1.getMonth() === date2.getMonth() &&
+                date1.getFullYear() === date2.getFullYear()
+            );
+        };
+    
+        if (!isSameDate(inputDataCheckout.data, today)) {
             setIsDateLocked(false);
         }
     }, [inputDataCheckout.data]);
