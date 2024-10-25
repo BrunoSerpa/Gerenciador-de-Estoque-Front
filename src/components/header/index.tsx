@@ -4,7 +4,7 @@ import { navigateTo } from '../../hooks/useNavegation';
 import { styleHeader } from './style';
 
 function Menu() {
-    const [showHamburguer, setShowHamburguer] = useState(true);
+    const [showHamburguer, setShowHamburguer] = useState(false);
 
     const rotation = useRef(new Animated.Value(0)).current;
 
@@ -15,7 +15,7 @@ function Menu() {
             useNativeDriver: true,
             easing: Easing.inOut(Easing.ease),
         }).start();
-        setShowHamburguer(!showHamburguer); // Alterna a visibilidade do menu
+        setShowHamburguer(!showHamburguer);
     };
 
     const rotateInterpolate = rotation.interpolate({
@@ -45,6 +45,20 @@ function Menu() {
                 </TouchableOpacity>
                 <View style={styleHeader.Divisor} />
                 <TouchableOpacity onPress={() => {
+                    navigateTo('Cadastro de Venda');
+                    toggleHamburguer();
+                }}>
+                    <Text style={styleHeader.Text}>Cadastro de Venda</Text>
+                </TouchableOpacity>
+                <View style={styleHeader.Divisor} />
+                <TouchableOpacity onPress={() => {
+                    navigateTo('Cadastro em Lote');
+                    toggleHamburguer();
+                }}>
+                    <Text style={styleHeader.Text}>Cadastro em Lote</Text>
+                </TouchableOpacity>
+                <View style={styleHeader.Divisor} />
+                <TouchableOpacity onPress={() => {
                     navigateTo('Cadastro de Itens');
                     toggleHamburguer();
                 }}>
@@ -61,7 +75,7 @@ function Menu() {
                 <TouchableOpacity onPress={() => {
                     navigateTo('Lista de Produtos');
                     toggleHamburguer();
-                    }}>
+                }}>
                     <Text style={styleHeader.Text}>Lista de Produtos</Text>
                 </TouchableOpacity>
             </View>

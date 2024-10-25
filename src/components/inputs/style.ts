@@ -1,17 +1,62 @@
 import { StyleSheet } from "react-native";
 import { textoStyle, theme } from "../../styles";
+
 export const styleDefault = StyleSheet.create({
-    inputTitle: {
-        ...textoStyle.texto2
+    adicionarNomeContainer: {
+        display: 'flex',
+        height: 30,
+        justifyContent: 'center'
     },
 
-    checkText: {
+    adicionarNomeTexto: {
+        color: theme.branco2,
+        textAlign: 'center',
+        width: '100%',
         ...textoStyle.texto1
     },
+
+    checkText: textoStyle.texto1,
+
+    divisorItemContainer: {
+        backgroundColor: theme.preto1,
+        height: 1.5,
+        width: '100%'
+    },
+
+    fecharIcon: {
+        height: 20,
+        marginHorizontal: 10,
+        width: 20
+    },
+
+    nomeItem: textoStyle.texto3,
+
+    obrigatorio: {
+        color: theme.vermelho1,
+        ...textoStyle.texto1
+    },
+
+    inputIcons: {
+        height: 20,
+        width: 20
+    },
+
+    inputTitle: textoStyle.texto2,
 
     inputText: {
         color: theme.cinza2,
         ...textoStyle.texto1
+    },
+
+    palavraDestacada: {
+        color: theme.azul1,
+        fontWeight: 'bold'
+    },
+
+    pressAdicionar: {
+        backgroundColor: theme.verde1,
+        height: "100%",
+        width: "100%"
     },
 
     selectText: {
@@ -28,35 +73,20 @@ export const styleDefault = StyleSheet.create({
         ...textoStyle.texto2
     },
 
-    palavraDestacada: {
-        color: theme.azul1,
-        fontWeight: 'bold'
-    },
-
-    inputIcons: {
-        height: 20,
-        width: 20
-    },
-
-    fecharIcon: {
-        marginHorizontal: 10,
-        width: 20,
-        height: 20,
-    },
-
-    divisorItemContainer: {
-        backgroundColor: theme.preto1,
-        height: 1.5,
-        width: '100%'
-    },
-
-    viewinputTitle: {
-        alignItems: 'flex-end',
+    viewDataCheck: {
+        alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        gap: 5,
-        justifyContent: 'flex-start',
-        width: "100%",
+        flexWrap: 'wrap',
+        gap: 5
+    },
+
+    viewFechar: {
+        alignItems: 'flex-end',
+        display: 'flex',
+        marginBottom: 20,
+        marginTop: -31.5,
+        width: '100%'
     },
 
     viewInput: {
@@ -69,7 +99,7 @@ export const styleDefault = StyleSheet.create({
         justifyContent: 'flex-start',
         paddingHorizontal: 5
     },
-    
+
     viewInputCheck: {
         alignItems: 'center',
         backgroundColor: theme.cinza1,
@@ -80,6 +110,31 @@ export const styleDefault = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 10
+    },
+
+    viewInputTitle: {
+        alignItems: 'flex-end',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 5,
+        justifyContent: 'flex-start',
+        width: "100%"
+    },
+
+    viewLista: {
+        backgroundColor: theme.cinza1,
+        borderRadius: 3,
+        maxHeight: 150,
+        position: 'static',
+        width: "100%"
+    },
+
+    viewPrincipal: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 5,
+        justifyContent: 'flex-start',
+        width: '100%'
     },
 
     viewTextSelected: {
@@ -105,37 +160,6 @@ export const styleDefault = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 5
     },
-    
-    viewDataCheck: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 5,
-    },
-
-    viewPrincipal: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 5,
-        justifyContent: 'flex-start'
-    },
-
-    viewLista: {
-        backgroundColor: theme.cinza1,
-        position: 'static',
-        borderRadius: 3,
-        width: "100%",
-        maxHeight: 150
-    },
-
-    viewFechar: {
-        alignItems: 'flex-end',
-        display: 'flex',
-        marginBottom: 20,
-        marginTop: -31.5,
-        width: '100%'
-    },
 
     viewItemLista: {
         alignItems: 'center',
@@ -144,34 +168,5 @@ export const styleDefault = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 5,
         paddingHorizontal: 10
-    },
-
-    pressAdicionar: {
-        backgroundColor: theme.verde1,
-        height: "100%",
-        width: "100%",
-    },
-
-    adicionarNomeContainer: {
-        display: 'flex',
-        height: 30,
-        justifyContent: 'center',
-    },
-
-    adicionarNomeTexto: {
-        color: theme.branco2,
-        textAlign: 'center',
-        width: '100%',
-        ...textoStyle.texto1
-    },
-
-
-
-    nomeItem: {
-        ...textoStyle.texto3
-    },
-    obrigatorio: {
-        color: theme.vermelho1,
-        ...textoStyle.texto1
     },
 })

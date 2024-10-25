@@ -1,8 +1,5 @@
-interface Item {
-    id: number;
-    id_cadastro: number;
+interface AtualizarItem {
     id_produto: number;
-    data_compra: Date;
     preco: number;
 };
 
@@ -11,10 +8,20 @@ interface CadastrarItem {
     preco: number;
 };
 
+interface Item {
+    id: number;
+    id_cadastro: number;
+    id_produto: number;
+    id_venda?: number;
+    data_compra: Date;
+    preco: number;
+    preco_venda?: number;
+};
+
 interface VisualizarItem {
     id: number;
     data_compra: Date;
     preco: number;
 };
 
-export { Item, CadastrarItem, VisualizarItem };
+export { AtualizarItem, CadastrarItem, Item, VisualizarItem };

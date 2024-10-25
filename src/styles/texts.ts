@@ -10,7 +10,7 @@ const textoStyle = StyleSheet.create({
     texto3: {
         fontSize: 17
     },
-    text4: {
+    texto4: {
         fontSize: 30
     }
 });

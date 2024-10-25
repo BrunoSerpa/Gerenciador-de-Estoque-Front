@@ -16,7 +16,6 @@ const styleDefault = StyleSheet.create({
     widthTitulo: {
         width: 300
     },
-    
 
     widthPreco: {
         width: 100
@@ -34,7 +33,7 @@ const styleDefault = StyleSheet.create({
         width: 100
     },
 
-    widthDataCadastro: {
+    widthData: {
         width: 110
     },
 
@@ -104,6 +103,18 @@ export const styleItem = StyleSheet.create({
         ...textoStyle.texto1,
         margin: 5,
         textAlign: 'center',
+    },
+    textItemCadastro: {
+        ...textoStyle.texto1,
+        margin: 5,
+        textAlign: 'center',
+        color: theme.vermelho1
+    },
+    textItemVenda: {
+        ...textoStyle.texto1,
+        margin: 5,
+        textAlign: 'center',
+        color: theme.verde3
     },
     viewFuncoes: {
         alignItems: 'center',

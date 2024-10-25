@@ -9,7 +9,7 @@ interface Props {
     obrigatorio?: boolean;
     tamanhoInput?: number;
     text: string;
-    title: string;
+    title?: string;
     keyboardType?: KeyboardTypeOptions;
     placeholder: string;
     set: (text: string) => void;
@@ -31,13 +31,17 @@ export default function InputDefault(inputDefault: Props) {
         styleDefault.viewPrincipal, {
             maxWidth: inputDefault.tamanhoInput || 200
         }]}>
-        <View style={styleDefault.viewinputTitle}>
-            <Text style={styleDefault.inputTitle}>{inputDefault.title}</Text>
-            {
-                inputDefault.obrigatorio &&
-                <Text style={styleDefault.obrigatorio}>*</Text>
-            }
-        </View>
+
+        {inputDefault.title &&
+            <View style={styleDefault.viewInputTitle}>
+                <Text style={styleDefault.inputTitle}>{inputDefault.title}</Text>
+                {
+                    inputDefault.obrigatorio &&
+                    <Text style={styleDefault.obrigatorio}>*</Text>
+                }
+            </View>
+        }
+
         <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
             <View style={styleDefault.viewInput}>
                 {inputDefault.marcacao && inputDefault.esquerda &&

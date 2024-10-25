@@ -8,7 +8,8 @@ const theme = {
     preto1: "#2F2F2F",
     verde1: '#27C561',
     verde2: '#2EB151',
-    vermelho1: '#DD4545',
+    verde3: '#227722',
+    vermelho1: '#CC4545',
     amarelo1: '#FCD443',
     azul1: '#1D75AC',
     transparente: "rgba(42, 42, 42, 0.6)"

@@ -2,7 +2,7 @@ import { Modal, Text, View } from "react-native";
 import { principalView } from "../../styles";
 import FecharModal from "../../components/inputs/fecharModal";
 import { styleLista } from "./style";
-import { ListaItens } from "../../components/lists";
+import ListaItens from "../../components/lists/listaItens";
 
 interface Props {
     id_produto: number;

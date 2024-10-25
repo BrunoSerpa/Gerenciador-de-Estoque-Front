@@ -4,13 +4,15 @@ import { styleTitulo } from "../style";
 export default function Titulo() {
     return (
         <View style={styleTitulo.viewLinha}>
-            <Text style={[styleTitulo.textTitulo, styleTitulo.widthTitulo]}>Título </Text>
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthTitulo]}>Título</Text>
             <View style={styleTitulo.separator} />
-            <Text style={[styleTitulo.textTitulo, styleTitulo.widthDataCadastro]}>Data Cadastro </Text>
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthData]}>Data</Text>
             <View style={styleTitulo.separator} />
             <Text style={[styleTitulo.textTitulo, styleTitulo.widthTotal]}>Total</Text>
             <View style={styleTitulo.separator} />
-            <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Excluir </Text>
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Editar</Text>
+            <View style={styleTitulo.separator} />
+            <Text style={[styleTitulo.textTitulo, styleTitulo.widthFuncoes]}>Excluir</Text>
         </View>
     );
 }
