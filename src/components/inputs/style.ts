@@ -14,6 +14,13 @@ export const styleDefault = StyleSheet.create({
         width: '100%',
         ...textoStyle.texto1
     },
+    
+    borderTextSelected:{
+        borderColor: theme.preto1,
+        borderStyle: 'solid',
+        borderWidth: 1.5,
+        borderRadius: 3
+    },
 
     checkText: textoStyle.texto1,
 
@@ -139,10 +146,6 @@ export const styleDefault = StyleSheet.create({
 
     viewTextSelected: {
         alignItems: 'center',
-        borderColor: theme.preto1,
-        borderStyle: 'solid',
-        borderWidth: 1.5,
-        borderRadius: 3,
         display: 'flex',
         flexDirection: 'row',
         minHeight: 30,
