@@ -75,7 +75,7 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
                 </Pressable>
                 <Text style={styleDefault.checkText}>Hoje</Text>
                 {isDateLocked ? (
-                    <View style={styleDefault.viewTextSelected}>
+                    <View style={[styleDefault.viewTextSelected, styleDefault.borderTextSelected]}>
                         <Text style={styleDefault.selectText}>
                             {formatDate(today)}
                         </Text>
