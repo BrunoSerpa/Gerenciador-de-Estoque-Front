@@ -22,9 +22,9 @@ export const styleForms = StyleSheet.create({
     bloco: {
         display: 'flex',
         gap: 25,
-        height: 'auto',
         justifyContent: 'space-between',
-        width: '48%'
+        flex: 1,
+        width: '90%'
     },
     botao: {
         fontSize: 30,
@@ -94,7 +94,9 @@ export const styleForms = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        gap: 20,
+        paddingHorizontal: 10,
+        width: '100%'
     },
     widthTituloFrete: {
         borderBottomWidth: 2,

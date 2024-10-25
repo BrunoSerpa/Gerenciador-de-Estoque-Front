@@ -5,7 +5,6 @@ import { styleDefault } from "../style";
 import { format } from "date-fns";
 
 interface Props {
-    tamanhoInput?: number;
     data: Date;
     title: string;
     set: (data: Date) => void;
@@ -57,7 +56,7 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
     };
 
     return (
-        <View style={[styleDefault.viewPrincipal, { maxWidth: inputDataCheckout.tamanhoInput || 200 }]}>
+        <View style={styleDefault.viewPrincipal}>
             <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>{inputDataCheckout.title}</Text>
                 <Text style={styleDefault.obrigatorio}>*</Text>
