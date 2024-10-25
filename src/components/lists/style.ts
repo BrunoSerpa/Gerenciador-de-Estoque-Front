@@ -114,7 +114,7 @@ export const styleItem = StyleSheet.create({
         ...textoStyle.texto1,
         margin: 5,
         textAlign: 'center',
-        color: theme.verde2
+        color: theme.verde3
     },
     viewFuncoes: {
         alignItems: 'center',
