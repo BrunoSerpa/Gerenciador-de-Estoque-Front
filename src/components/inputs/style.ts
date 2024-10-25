@@ -14,8 +14,8 @@ export const styleDefault = StyleSheet.create({
         width: '100%',
         ...textoStyle.texto1
     },
-    
-    borderTextSelected:{
+
+    borderTextSelected: {
         borderColor: theme.preto1,
         borderStyle: 'solid',
         borderWidth: 1.5,
@@ -48,6 +48,11 @@ export const styleDefault = StyleSheet.create({
         width: 20
     },
 
+    inputFrete: {
+        width: '25%',
+        borderBottomWidth: 2,
+    },
+
     inputTitle: textoStyle.texto2,
 
     inputText: {
@@ -78,6 +83,31 @@ export const styleDefault = StyleSheet.create({
         marginTop: -4,
         width: 'auto',
         ...textoStyle.texto2
+    },
+
+    separador: {
+        backgroundColor: theme.preto1,
+        height: "100%",
+        width: 2.5,
+    },
+
+    textFrete: {
+        margin: 'auto',
+        textAlign: 'center',
+        fontWeight: '500',
+        ...textoStyle.texto3
+    },
+
+    tituloFrete: {
+        borderBottomWidth: 2,
+        width: "49.85%",
+    },
+
+    viewFrete: {
+        borderLeftWidth: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        width: "92.5%"
     },
 
     viewDataCheck: {
