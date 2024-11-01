@@ -48,6 +48,11 @@ export const styleDefault = StyleSheet.create({
         width: 20
     },
 
+    inputIconsCheckbox: {
+        height: 30,
+        width: 30
+    },
+
     inputFrete: {
         width: '25%',
         borderBottomWidth: 2,
@@ -116,6 +121,13 @@ export const styleDefault = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 5
+    },
+
+    viewCheckbox: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 5,
     },
 
     viewFechar: {
