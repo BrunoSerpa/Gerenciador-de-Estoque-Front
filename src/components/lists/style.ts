@@ -60,7 +60,7 @@ export const styleLista = StyleSheet.create({
         marginTop: 10,
         marginHorizontal: 'auto',
         maxWidth: '90%',
-        maxHeight: '80%',
+        maxHeight: '75%',
     },
     viewCheckboxPrincipal: {
         display: 'flex',
