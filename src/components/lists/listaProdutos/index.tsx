@@ -9,7 +9,7 @@ import Item from "./item";
 import ListaItem from "../../../pages/listaItem";
 import { useFocusEffect } from "@react-navigation/native";
 import ICheckbox from "./interface";
-import { Checkbox } from "../../inputs";
+import { Checkbox, InputPesquisa } from "../../inputs";
 
 export default function ListaProdutos() {
     const [produtos, setProdutos] = useState<VisualizarProduto[] | undefined>(undefined);
@@ -43,7 +43,7 @@ export default function ListaProdutos() {
     const FecharModal = () => {
         setListarItens(undefined)
     }
-    
+
     const [showNomes, setShowNomes] = useState(true);
     const [showPreco, setShowPreco] = useState(true);
     const [showQuantidade, setShowQuantidade] = useState(true);
@@ -62,24 +62,39 @@ export default function ListaProdutos() {
         Itens: showItens,
         Funcoes: showFuncoes
     }
+
+    const [nomeProcurado, setNomeProcurado] = useState('')
+    const [marcaProcurada, setMarcaProcurada] = useState('')
     return (
         produtos === undefined ?
             <Carregando />
             :
             <>
                 <View style={styleLista.viewCheckboxPrincipal}>
-                <View style={styleLista.viewCheckbox}>
-                    <Checkbox set={setShowNomes} status={showNomes} titulo="Mostrar nomes"/>
-                    <Checkbox set={setShowPreco} status={showPreco} titulo="Mostrar preço"/>
-                    <Checkbox set={setShowQuantidade} status={showQuantidade} titulo="Mostrar quantidade"/>
-                    <Checkbox set={setShowGarantia} status={showGarantia} titulo="Mostrar garantia"/>
-                </View>
-                <View style={styleLista.viewCheckbox}>
-                    <Checkbox set={setShowValidade} status={showValidade} titulo="Mostrar validade"/>
-                    <Checkbox set={setShowMarca} status={showMarca} titulo="Mostrar marca"/>
-                    <Checkbox set={setShowItens} status={showItens} titulo="Mostrar itens"/>
-                    <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar funções"/>
-                </View>
+                    <View style={styleLista.viewCheckbox}>
+                        <InputPesquisa
+                            nome={nomeProcurado}
+                            set={setNomeProcurado}
+                            placeholder="nome"
+                            title="Procurar Nome"
+                        />
+                        <Checkbox set={setShowNomes} status={showNomes} titulo="Mostrar nomes" />
+                        <Checkbox set={setShowPreco} status={showPreco} titulo="Mostrar preço" />
+                        <Checkbox set={setShowQuantidade} status={showQuantidade} titulo="Mostrar quantidade" />
+                        <Checkbox set={setShowGarantia} status={showGarantia} titulo="Mostrar garantia" />
+                    </View>
+                    <View style={styleLista.viewCheckbox}>
+                        <InputPesquisa
+                            nome={marcaProcurada}
+                            set={setMarcaProcurada}
+                            placeholder="marca"
+                            title="Procurar Marca"
+                        />
+                        <Checkbox set={setShowValidade} status={showValidade} titulo="Mostrar validade" />
+                        <Checkbox set={setShowMarca} status={showMarca} titulo="Mostrar marca" />
+                        <Checkbox set={setShowItens} status={showItens} titulo="Mostrar itens" />
+                        <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar funções" />
+                    </View>
                 </View>
                 <ScrollView
                     style={styleLista.scrollView}
@@ -88,8 +103,16 @@ export default function ListaProdutos() {
                     <ScrollView
                         horizontal={false}
                     >
-                        <Titulo checkbox={checkbox}/>
-                        {produtos.map((produto) => (
+                        <Titulo checkbox={checkbox} />
+                        {produtos.map((produto) =>
+                            (
+                                nomeProcurado.length < 3 ||
+                                produto.nomes.find((nome) => nome.nome.toUpperCase().includes(nomeProcurado.toUpperCase()))
+                            ) &&
+                            (
+                                marcaProcurada.length < 3 ||
+                                produto.marca?.nome.toUpperCase().includes(marcaProcurada.toUpperCase())
+                            ) &&
                             <Item
                                 produto={produto}
                                 setRefresh={setRefresh}
@@ -97,7 +120,7 @@ export default function ListaProdutos() {
                                 key={produto.id}
                                 checkbox={checkbox}
                             />
-                        ))}
+                        )}
                     </ScrollView>
                 </ScrollView>
                 {listarItens !== undefined &&
