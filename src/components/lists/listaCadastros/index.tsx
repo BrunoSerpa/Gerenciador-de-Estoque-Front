@@ -10,7 +10,7 @@ import { VisualizarVenda } from "../../../interface/Venda";
 import ItemCadastro from "./itemCompra";
 import ItemVenda from "./itemVenda";
 import ICheckbox from "./interface";
-import { Checkbox } from "../../inputs";
+import { Checkbox, InputPesquisa } from "../../inputs";
 
 export default function ListaCadastros() {
     const [cadastros, setCadastros] = useState<VisualizarCadastro[] | undefined>(undefined);
@@ -48,9 +48,11 @@ export default function ListaCadastros() {
     const checkbox: ICheckbox = {
         Título: showTitulo,
         Data: showData,
-        Total: showTotal, 
+        Total: showTotal,
         Funcoes: showFuncoes,
     }
+
+    const [tituloProcurado, setTituloProcurado] = useState('')
     return (
         (cadastros === undefined || vendas === undefined) ?
             <Carregando />
@@ -58,14 +60,20 @@ export default function ListaCadastros() {
             <>
                 <View style={styleLista.viewCheckboxPrincipal}>
                     <View style={styleLista.viewCheckbox}>
-                        <Checkbox set={setShowTitulo} status={showTitulo} titulo="Mostrar Título"/>
-                        <Checkbox set={setShowData} status={showData} titulo="Mostrar Data"/>
+                        <InputPesquisa
+                            nome={tituloProcurado}
+                            set={setTituloProcurado}
+                            placeholder="nome"
+                            title="Procurar Nome"
+                        />
+                        <Checkbox set={setShowTitulo} status={showTitulo} titulo="Mostrar Título" />
+                        <Checkbox set={setShowData} status={showData} titulo="Mostrar Data" />
                     </View>
                     <View style={styleLista.viewCheckbox}>
-                        <Checkbox set={setShowTotal} status={showTotal} titulo="Mostrar Total"/>
-                        <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar Funções"/>
+                        <Checkbox set={setShowTotal} status={showTotal} titulo="Mostrar Total" />
+                        <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar Funções" />
                     </View>
-                
+
                 </View>
                 <ScrollView
                     style={styleLista.scrollView}
@@ -76,6 +84,7 @@ export default function ListaCadastros() {
                     >
                         <Titulo checkbox={checkbox} />
                         {cadastros.map((cadastro) => (
+                            tituloProcurado.length < 3 || cadastro.titulo.toUpperCase().includes(tituloProcurado.toUpperCase()) &&
                             <ItemCadastro
                                 cadastro={cadastro}
                                 setRefresh={setRefresh}
@@ -84,6 +93,7 @@ export default function ListaCadastros() {
                             />
                         ))}
                         {vendas.map((venda) => (
+                            tituloProcurado.length < 3 || venda.titulo.toUpperCase().includes(tituloProcurado.toUpperCase()) &&
                             <ItemVenda
                                 venda={venda}
                                 setRefresh={setRefresh}
