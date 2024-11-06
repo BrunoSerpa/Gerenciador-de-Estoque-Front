@@ -66,7 +66,7 @@ export const styleLista = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 10,
+        gap: 50,
         height: 'auto',
         justifyContent: 'space-between',
         marginHorizontal: 'auto',
@@ -76,7 +76,7 @@ export const styleLista = StyleSheet.create({
     viewCheckbox: {
         justifyContent: 'space-between',
         display: 'flex',
-        width: 'auto',
+        flex: 1,
         gap: 20,
     }
 });
