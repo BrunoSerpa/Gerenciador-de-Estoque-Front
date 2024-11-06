@@ -23,6 +23,7 @@ export const styleDefault = StyleSheet.create({
     },
 
     checkText: textoStyle.texto1,
+    radioText: textoStyle.texto3,
 
     divisorItemContainer: {
         backgroundColor: theme.preto1,
@@ -51,6 +52,23 @@ export const styleDefault = StyleSheet.create({
     inputIconsCheckbox: {
         height: 30,
         width: 30
+    },
+
+    inputRadiobutton: {
+        height: 20,
+        width: 20,
+        borderColor: theme.preto1,
+        borderWidth: 2.5,
+        borderRadius: 100
+    },
+
+    inputRadiobuttonSelected: {
+        height: 20,
+        width: 20,
+        backgroundColor: theme.preto1,
+        borderColor: theme.preto1,
+        borderWidth: 2.5,
+        borderRadius: 100
     },
 
     inputFrete: {
@@ -128,6 +146,21 @@ export const styleDefault = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 5,
+    },
+
+    viewRadiobutton: {
+        alignItems: 'center',
+        display: 'flex',
+        minWidth: 'auto',
+        flex: 1,
+        flexDirection: 'row',
+        gap: 5,
+    },
+
+    viewRadiobuttonPrincipal: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row'
     },
 
     viewFechar: {
