@@ -10,7 +10,7 @@ import { VisualizarVenda } from "../../../interface/Venda";
 import ItemCadastro from "./itemCompra";
 import ItemVenda from "./itemVenda";
 import ICheckbox from "./interface";
-import { Checkbox, InputPesquisa } from "../../inputs";
+import { Checkbox, InputPesquisa, RadioButton } from "../../inputs";
 
 export default function ListaCadastros() {
     const [cadastros, setCadastros] = useState<VisualizarCadastro[] | undefined>(undefined);
@@ -53,6 +53,9 @@ export default function ListaCadastros() {
     }
 
     const [tituloProcurado, setTituloProcurado] = useState('')
+
+    const [showFiltroHistorico, setShowFiltroHistorico] = useState(false)
+    const [tipoHistorico, setTipoHistorico] = useState(0)
     return (
         (cadastros === undefined || vendas === undefined) ?
             <Carregando />
@@ -64,12 +67,16 @@ export default function ListaCadastros() {
                             nome={tituloProcurado}
                             set={setTituloProcurado}
                             placeholder="nome"
-                            title="Procurar Nome"
+                            title="Procurar Título"
                         />
-                        <Checkbox set={setShowTitulo} status={showTitulo} titulo="Mostrar Título" />
-                        <Checkbox set={setShowData} status={showData} titulo="Mostrar Data" />
+                        <Checkbox set={setShowFiltroHistorico} status={showFiltroHistorico} titulo="Filtrar tipo" />
+                        {showFiltroHistorico &&
+                            <RadioButton titulo="Tipo Histórico" set={setTipoHistorico} status={tipoHistorico} subtitulos={["Cadastrados", "Vendidos"]} />
+                        }
                     </View>
                     <View style={styleLista.viewCheckbox}>
+                        <Checkbox set={setShowTitulo} status={showTitulo} titulo="Mostrar Título" />
+                        <Checkbox set={setShowData} status={showData} titulo="Mostrar Data" />
                         <Checkbox set={setShowTotal} status={showTotal} titulo="Mostrar Total" />
                         <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar Funções" />
                     </View>
@@ -83,24 +90,26 @@ export default function ListaCadastros() {
                         horizontal={false}
                     >
                         <Titulo checkbox={checkbox} />
-                        {cadastros.map((cadastro) => (
-                            tituloProcurado.length < 3 || cadastro.titulo.toUpperCase().includes(tituloProcurado.toUpperCase()) &&
-                            <ItemCadastro
-                                cadastro={cadastro}
-                                setRefresh={setRefresh}
-                                key={cadastro.id}
-                                checkbox={checkbox}
-                            />
-                        ))}
-                        {vendas.map((venda) => (
-                            tituloProcurado.length < 3 || venda.titulo.toUpperCase().includes(tituloProcurado.toUpperCase()) &&
-                            <ItemVenda
-                                venda={venda}
-                                setRefresh={setRefresh}
-                                key={venda.id}
-                                checkbox={checkbox}
-                            />
-                        ))}
+                        {(!showFiltroHistorico || tipoHistorico === 0) &&
+                            cadastros.map((cadastro) => (
+                                (tituloProcurado.length < 3 || cadastro.titulo.toUpperCase().includes(tituloProcurado.toUpperCase())) &&
+                                <ItemCadastro
+                                    cadastro={cadastro}
+                                    setRefresh={setRefresh}
+                                    key={cadastro.id}
+                                    checkbox={checkbox}
+                                />
+                            ))}
+                        {(!showFiltroHistorico || tipoHistorico === 1) &&
+                            vendas.map((venda) => (
+                                (tituloProcurado.length < 3 || venda.titulo.toUpperCase().includes(tituloProcurado.toUpperCase())) &&
+                                <ItemVenda
+                                    venda={venda}
+                                    setRefresh={setRefresh}
+                                    key={venda.id}
+                                    checkbox={checkbox}
+                                />
+                            ))}
                     </ScrollView>
                 </ScrollView>
             </>
