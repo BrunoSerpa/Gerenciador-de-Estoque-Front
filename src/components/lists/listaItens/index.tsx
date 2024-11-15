@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { listarItens } from "../../../services";
 import { VisualizarItem } from "../../../interface/Item";
 import { styleLista } from "../style";
@@ -7,7 +7,7 @@ import Carregando from "../../carregando";
 import Titulo from "./titulo";
 import Item from "./item";
 import ICheckbox from "./interface";
-import { Checkbox } from "../../inputs";
+import { Checkbox, InputData } from "../../inputs";
 
 interface Props {
     id_produto: number
@@ -36,7 +36,10 @@ export default function ListaItens(item: Props) {
         Excluir: showExcluir,
         ID: showID,
         Preco: showPreco
-    }
+    };
+
+    const [dataInicio, setDataInicio] = useState<Date | undefined>(undefined);
+    const [dataFim, setDataFim] = useState<Date | undefined>(undefined);
     return (
         produtos === undefined ?
             <Carregando />
@@ -46,10 +49,12 @@ export default function ListaItens(item: Props) {
                     <View style={styleLista.viewCheckbox}>
                         <Checkbox set={setShowID} status={showID} titulo="Mostrar ID" />
                         <Checkbox set={setShowData} status={showData} titulo="Mostrar Data" />
-                    </View>
-                    <View style={styleLista.viewCheckbox}>
                         <Checkbox set={setShowExcluir} status={showExcluir} titulo="Mostrar Excluir" />
                         <Checkbox set={setShowPreco} status={showPreco} titulo="Mostrar Preço" />
+                    </View>
+                    <View style={styleLista.viewCheckbox}>
+                        <InputData data={dataInicio} set={setDataInicio} title="Data Início" />
+                        <InputData data={dataFim} set={setDataFim} title="Data Fim" />
                     </View>
                 </View>
                 <ScrollView
@@ -60,14 +65,17 @@ export default function ListaItens(item: Props) {
                         horizontal={false}
                     >
                         <Titulo checkbox={checkbox} />
-                        {produtos.map((produto) => (
+                        {produtos.map((produto) =>
+                            (dataInicio ? new Date(produto.data_compra).getTime() >= dataInicio.getTime() : true) &&
+                            (dataFim ? new Date(produto.data_compra).getTime() <= dataFim.getTime() : true) &&
                             <Item
                                 item={produto}
                                 setRefresh={setRefresh}
                                 key={produto.id}
                                 checkbox={checkbox}
                             />
-                        ))}
+                        )}
+
                     </ScrollView>
                 </ScrollView>
             </>
