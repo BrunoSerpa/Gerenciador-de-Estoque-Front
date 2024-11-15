@@ -194,6 +194,19 @@ export const styleDefault = StyleSheet.create({
         paddingHorizontal: 10
     },
 
+    viewInputCheck2: {
+        alignItems: 'center',
+        backgroundColor: theme.cinza1,
+        borderRadius: 3,
+        display: 'flex',
+        flexDirection: 'row',
+        height: 30,
+        minWidth: 'auto',
+        width: '90%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10
+    },
+
     viewInputTitle: {
         alignItems: 'flex-end',
         display: 'flex',
