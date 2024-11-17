@@ -3,9 +3,11 @@ import { styleItem } from "../style";
 import { excluirVenda } from "../../../services";
 import { VisualizarVenda } from "../../../interface/Venda";
 import { navigateTo } from "../../../hooks/useNavegation";
+import ICheckbox from "./interface";
 
 interface Props {
     venda: VisualizarVenda;
+    checkbox: ICheckbox;
     setRefresh: (refresh: boolean) => void;
 }
 export default function ItemVenda(itemVenda: Props) {
@@ -29,29 +31,41 @@ export default function ItemVenda(itemVenda: Props) {
 
     return (
         <View style={styleItem.viewLinha}>
-            <Text style={[styleItem.textItemVenda, styleItem.widthTitulo]}>{itemVenda.venda.titulo !== '' ? itemVenda.venda.titulo : `Venda ${itemVenda.venda.id}`}</Text>
             <View style={styleItem.separator} />
-            <Text style={[styleItem.textItemVenda, styleItem.widthData]}>{formatarData(itemVenda.venda.data_venda)}</Text>
-            <View style={styleItem.separator} />
-            <Text style={[styleItem.textItemVenda, styleItem.widthTotal]}>+ R${itemVenda.venda.total} </Text>
-            <View style={styleItem.separator} />
-            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
-                <Pressable onPress={() => navigateTo('Atualizar Venda', {vendaId: itemVenda.venda.id})}>
-                    <Image
-                        source={require("../../../../assets/pencil.png")}
-                        style={styleItem.funcoesIcons}
-                    />
-                </Pressable>
-            </View>
-            <View style={styleItem.separator} />
-            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
-                <Pressable onPress={deletarVenda}>
-                    <Image
-                        source={require("../../../../assets/trash.png")}
-                        style={styleItem.funcoesIcons}
-                    />
-                </Pressable>
-            </View>
+            {itemVenda.checkbox.Título && <>
+                <Text style={[styleItem.textItemVenda, styleItem.widthTitulo]}>{itemVenda.venda.titulo !== '' ? itemVenda.venda.titulo : `Venda ${itemVenda.venda.id}`}</Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemVenda.checkbox.Data && <>
+                <Text style={[styleItem.textItemVenda, styleItem.widthData]}>{formatarData(itemVenda.venda.data_venda)}</Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemVenda.checkbox.Total && <>
+                <Text style={[styleItem.textItemVenda, styleItem.widthTotal]}>+ R${itemVenda.venda.total} </Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemVenda.checkbox.Funcoes && <>
+                <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                    <Pressable onPress={() => navigateTo('Atualizar Venda', {vendaId: itemVenda.venda.id})}>
+                        <Image
+                            source={require("../../../../assets/pencil.png")}
+                            style={styleItem.funcoesIcons}
+                        />
+                    </Pressable>
+                </View>
+                <View style={styleItem.separator} />
+            </>}
+            {itemVenda.checkbox.Funcoes && <>
+                <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                    <Pressable onPress={deletarVenda}>
+                        <Image
+                            source={require("../../../../assets/trash.png")}
+                            style={styleItem.funcoesIcons}
+                        />
+                    </Pressable>
+                </View>
+                <View style={styleItem.separator} />
+            </>}
         </View>
     );
 }

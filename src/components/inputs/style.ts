@@ -15,7 +15,15 @@ export const styleDefault = StyleSheet.create({
         ...textoStyle.texto1
     },
 
+    borderTextSelected: {
+        borderColor: theme.preto1,
+        borderStyle: 'solid',
+        borderWidth: 1.5,
+        borderRadius: 3
+    },
+
     checkText: textoStyle.texto1,
+    radioText: textoStyle.texto3,
 
     divisorItemContainer: {
         backgroundColor: theme.preto1,
@@ -39,6 +47,33 @@ export const styleDefault = StyleSheet.create({
     inputIcons: {
         height: 20,
         width: 20
+    },
+
+    inputIconsCheckbox: {
+        height: 30,
+        width: 30
+    },
+
+    inputRadiobutton: {
+        height: 20,
+        width: 20,
+        borderColor: theme.preto1,
+        borderWidth: 2.5,
+        borderRadius: 100
+    },
+
+    inputRadiobuttonSelected: {
+        height: 20,
+        width: 20,
+        backgroundColor: theme.preto1,
+        borderColor: theme.preto1,
+        borderWidth: 2.5,
+        borderRadius: 100
+    },
+
+    inputFrete: {
+        width: '25%',
+        borderBottomWidth: 2,
     },
 
     inputTitle: textoStyle.texto2,
@@ -73,12 +108,59 @@ export const styleDefault = StyleSheet.create({
         ...textoStyle.texto2
     },
 
+    separador: {
+        backgroundColor: theme.preto1,
+        height: "100%",
+        width: 2.5,
+    },
+
+    textFrete: {
+        margin: 'auto',
+        textAlign: 'center',
+        fontWeight: '500',
+        ...textoStyle.texto3
+    },
+
+    tituloFrete: {
+        borderBottomWidth: 2,
+        width: "49.85%",
+    },
+
+    viewFrete: {
+        borderLeftWidth: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        width: "92.5%"
+    },
+
     viewDataCheck: {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 5
+    },
+
+    viewCheckbox: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 5,
+    },
+
+    viewRadiobutton: {
+        alignItems: 'center',
+        display: 'flex',
+        minWidth: 'auto',
+        flex: 1,
+        flexDirection: 'row',
+        gap: 5,
+    },
+
+    viewRadiobuttonPrincipal: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row'
     },
 
     viewFechar: {
@@ -112,6 +194,19 @@ export const styleDefault = StyleSheet.create({
         paddingHorizontal: 10
     },
 
+    viewInputCheck2: {
+        alignItems: 'center',
+        backgroundColor: theme.cinza1,
+        borderRadius: 3,
+        display: 'flex',
+        flexDirection: 'row',
+        height: 30,
+        minWidth: 'auto',
+        width: '90%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10
+    },
+
     viewInputTitle: {
         alignItems: 'flex-end',
         display: 'flex',
@@ -139,10 +234,6 @@ export const styleDefault = StyleSheet.create({
 
     viewTextSelected: {
         alignItems: 'center',
-        borderColor: theme.preto1,
-        borderStyle: 'solid',
-        borderWidth: 1.5,
-        borderRadius: 3,
         display: 'flex',
         flexDirection: 'row',
         minHeight: 30,

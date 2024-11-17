@@ -37,7 +37,7 @@ export default function InputNomes(inputNomes: Props) {
 
     const deletarNome = (nome: string) => {
         inputNomes.set(inputNomes.nomes.filter((n) => n !== nome));
-        if (nomeSelecionado === nome) { setNomeSelecionado("");}
+        if (nomeSelecionado === nome) { setNomeSelecionado(""); }
     };
 
     const selecionarNome = (nome: string) => {
@@ -60,7 +60,10 @@ export default function InputNomes(inputNomes: Props) {
                 <Text style={styleDefault.obrigatorio}>*</Text>
             </View>
 
-            <Pressable onPress={() => { setMostrarLista(!mostrarLista); setMostrarNovoInput(false) }} style={styleDefault.viewTextSelected}>
+            <Pressable
+                onPress={() => { setMostrarLista(!mostrarLista); setMostrarNovoInput(false) }}
+                style={[styleDefault.viewTextSelected, styleDefault.borderTextSelected]}
+            >
                 <Text
                     ellipsizeMode="tail"
                     numberOfLines={1}
@@ -68,7 +71,7 @@ export default function InputNomes(inputNomes: Props) {
                 >
                     {nomeSelecionado || "Nome"}
                 </Text>
-                {mostrarLista ? 
+                {mostrarLista ?
                     <Text style={styleDefault.selectIconText}>▼</Text> :
                     <Pressable onPress={(e) => { e.stopPropagation(); adicionarNome(); }}>
                         <Text style={styleDefault.selectIconText}>+</Text>

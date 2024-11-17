@@ -3,9 +3,11 @@ import { styleItem } from "../style";
 import { excluirCadastro } from "../../../services";
 import { VisualizarCadastro } from "../../../interface/Cadastro";
 import { navigateTo } from "../../../hooks/useNavegation";
+import ICheckbox from "./interface";
 
 interface Props {
     cadastro: VisualizarCadastro;
+    checkbox: ICheckbox;
     setRefresh: (refresh: boolean) => void;
 }
 export default function ItemCadastro(itemCadastro: Props) {
@@ -29,29 +31,41 @@ export default function ItemCadastro(itemCadastro: Props) {
 
     return (
         <View style={styleItem.viewLinha}>
-            <Text style={[styleItem.textItemCadastro, styleItem.widthTitulo]}>{itemCadastro.cadastro.titulo !== '' ? itemCadastro.cadastro.titulo : `Cadastro ${itemCadastro.cadastro.id}`}</Text>
             <View style={styleItem.separator} />
-            <Text style={[styleItem.textItemCadastro, styleItem.widthData]}>{formatarData(itemCadastro.cadastro.data_cadastro)}</Text>
-            <View style={styleItem.separator} />
-            <Text style={[styleItem.textItemCadastro, styleItem.widthTotal]}>- R${itemCadastro.cadastro.total} </Text>
-            <View style={styleItem.separator} />
-            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
-                <Pressable onPress={() => navigateTo('Atualizar Cadastro', {cadastroId: itemCadastro.cadastro.id})}>
-                    <Image
-                        source={require("../../../../assets/pencil.png")}
-                        style={styleItem.funcoesIcons}
-                    />
-                </Pressable>
-            </View>
-            <View style={styleItem.separator} />
-            <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
-                <Pressable onPress={deletarCadastro}>
-                    <Image
-                        source={require("../../../../assets/trash.png")}
-                        style={styleItem.funcoesIcons}
-                    />
-                </Pressable>
-            </View>
+            {itemCadastro.checkbox.Título && <>
+                <Text style={[styleItem.textItemCadastro, styleItem.widthTitulo]}>{itemCadastro.cadastro.titulo !== '' ? itemCadastro.cadastro.titulo : `Cadastro ${itemCadastro.cadastro.id}`}</Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemCadastro.checkbox.Data && <>
+                <Text style={[styleItem.textItemCadastro, styleItem.widthData]}>{formatarData(itemCadastro.cadastro.data_cadastro)}</Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemCadastro.checkbox.Total && <>
+                <Text style={[styleItem.textItemCadastro, styleItem.widthTotal]}>- R${itemCadastro.cadastro.total} </Text>
+                <View style={styleItem.separator} />
+            </>}
+            {itemCadastro.checkbox.Funcoes && <>
+                <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                    <Pressable onPress={() => navigateTo('Atualizar Cadastro', { cadastroId: itemCadastro.cadastro.id })}>
+                        <Image
+                            source={require("../../../../assets/pencil.png")}
+                            style={styleItem.funcoesIcons}
+                        />
+                    </Pressable>
+                </View>
+                <View style={styleItem.separator} />
+            </>}
+            {itemCadastro.checkbox.Funcoes && <>
+                <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
+                    <Pressable onPress={deletarCadastro}>
+                        <Image
+                            source={require("../../../../assets/trash.png")}
+                            style={styleItem.funcoesIcons}
+                        />
+                    </Pressable>
+                </View>
+                <View style={styleItem.separator} />
+            </>}
         </View>
     );
 }

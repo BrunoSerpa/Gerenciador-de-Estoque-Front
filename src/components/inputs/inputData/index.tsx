@@ -5,46 +5,30 @@ import { styleDefault } from "../style";
 import { format } from "date-fns";
 
 interface Props {
-    data: Date;
+    data?: Date;
     title: string;
-    set: (data: Date) => void;
-}
+    set: (data?: Date) => void;
+};
 
-export default function InputDataCheckout(inputDataCheckout: Props) {
+export default function InputData(inputData: Props) {
     const [isDateLocked, setIsDateLocked] = useState(true);
     const [isPickerVisible, setIsPickerVisible] = useState(false);
 
-    const today = new Date();
-
     const handleToggleImage = () => {
         setIsDateLocked(!isDateLocked);
-        if (!isDateLocked) {
-            inputDataCheckout.set(today);
-        }
+        inputData.set(isDateLocked ? undefined : new Date());
     };
+
+    useEffect(() => setIsDateLocked(inputData.data !== undefined), []);
 
     function handleDateChange(_event: any, selectedDate: Date | undefined) {
         if (selectedDate) {
-            inputDataCheckout.set(selectedDate);
-        }
+            inputData.set(selectedDate);
+        };
         if (Platform.OS !== 'ios') {
             setIsPickerVisible(false);
-        }
-    }
-
-    useEffect(() => {
-        const isSameDate = (date1: Date, date2: Date) => {
-            return (
-                date1.getDate() === date2.getDate() &&
-                date1.getMonth() === date2.getMonth() &&
-                date1.getFullYear() === date2.getFullYear()
-            );
         };
-    
-        if (!isSameDate(inputDataCheckout.data, today)) {
-            setIsDateLocked(false);
-        }
-    }, [inputDataCheckout.data]);
+    };
 
     const formatDate = (date: Date) => {
         return format(date, "dd/MM/yyyy");
@@ -58,8 +42,7 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
     return (
         <View style={styleDefault.viewPrincipal}>
             <View style={styleDefault.viewInputTitle}>
-                <Text style={styleDefault.inputTitle}>{inputDataCheckout.title}</Text>
-                <Text style={styleDefault.obrigatorio}>*</Text>
+                <Text style={styleDefault.inputTitle}>{inputData.title}</Text>
             </View>
 
             <View style={styleDefault.viewDataCheck}>
@@ -73,19 +56,12 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
                         style={styleDefault.inputIcons}
                     />
                 </Pressable>
-                <Text style={styleDefault.checkText}>Hoje</Text>
-                {isDateLocked ? (
-                    <View style={[styleDefault.viewTextSelected, styleDefault.borderTextSelected]}>
-                        <Text style={styleDefault.selectText}>
-                            {formatDate(today)}
-                        </Text>
-                    </View>
-                ) : (
+                {inputData.data !== undefined ?
                     <View>
                         <TouchableOpacity onPress={openDatePicker}>
-                            <View style={styleDefault.viewInputCheck}>
+                            <View style={styleDefault.viewInputCheck2}>
                                 <Text style={styleDefault.inputText}>
-                                    {formatDate(inputDataCheckout.data)}
+                                    {formatDate(inputData.data)}
                                 </Text>
                                 <Image
                                     source={require("../../../../assets/calendar.png")}
@@ -96,16 +72,19 @@ export default function InputDataCheckout(inputDataCheckout: Props) {
 
                         {isPickerVisible && (
                             <DateTimePicker
-                                maximumDate={today}
+                                maximumDate={new Date()}
                                 mode="date"
-                                value={inputDataCheckout.data}
+                                value={inputData.data}
                                 onChange={handleDateChange}
                                 display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                             />
-                        )}
+                        )
+                        }
                     </View>
-                )}
+                    :
+                    <Text style={styleDefault.checkText}>Filtar data</Text>
+                }
             </View>
         </View>
     );
-}
+};

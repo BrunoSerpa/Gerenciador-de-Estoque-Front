@@ -5,7 +5,6 @@ const styleDefault = StyleSheet.create({
     separator: {
         backgroundColor: theme.preto1,
         height: "100%",
-        marginHorizontal: 10,
         width: 2,
     },
 
@@ -61,18 +60,36 @@ export const styleLista = StyleSheet.create({
         marginTop: 10,
         marginHorizontal: 'auto',
         maxWidth: '90%',
-        maxHeight: '80%',
+        maxHeight: '75%',
+    },
+    viewCheckboxPrincipal: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 50,
+        height: 'auto',
+        justifyContent: 'space-between',
+        marginHorizontal: 'auto',
+        marginVertical: 10,
+        width: '90%',
+    },
+    viewCheckbox: {
+        justifyContent: 'space-between',
+        display: 'flex',
+        flex: 1,
+        gap: 20,
     }
 });
 
 export const styleTitulo = StyleSheet.create({
     viewLinha: {
         alignItems: 'center',
+        borderStyle: 'solid',
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
         display: 'flex',
         flexDirection: 'row',
         borderColor: theme.preto1,
-        borderStyle: 'solid',
-        borderWidth: 2,
     },
     textTitulo: {
         ...textoStyle.texto2,
@@ -90,11 +107,10 @@ export const styleItem = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         height: 'auto',
-        width: '100%',
+        width: 'auto',
         borderColor: theme.preto1,
         borderStyle: 'solid',
-        borderWidth: 2,
-        borderTopWidth: 0
+        borderBottomWidth: 2,
     },
     dropdownNome: {
         display: 'none'

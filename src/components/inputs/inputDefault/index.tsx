@@ -7,7 +7,6 @@ interface Props {
     esquerda?: boolean;
     marcacao?: string;
     obrigatorio?: boolean;
-    tamanhoInput?: number;
     text: string;
     title?: string;
     keyboardType?: KeyboardTypeOptions;
@@ -27,11 +26,7 @@ export default function InputDefault(inputDefault: Props) {
         }
     };
 
-    return (<View style={[
-        styleDefault.viewPrincipal, {
-            maxWidth: inputDefault.tamanhoInput || 200
-        }]}>
-
+    return (<View style={styleDefault.viewPrincipal}>
         {inputDefault.title &&
             <View style={styleDefault.viewInputTitle}>
                 <Text style={styleDefault.inputTitle}>{inputDefault.title}</Text>

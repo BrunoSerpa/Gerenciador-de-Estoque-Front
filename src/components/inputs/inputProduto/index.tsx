@@ -136,7 +136,10 @@ export default function InputProduto(inputProduto: Props) {
             }
 
             {inputProduto.id_nome !== 0 ? (
-                <View style={styleDefault.viewTextSelected}>
+                <View style={[
+                    styleDefault.viewTextSelected,
+                    (inputProduto.title ?? true) && styleDefault.borderTextSelected
+                ]}>
                     <Text style={styleDefault.selectText}>{produtoProcurado}</Text>
                     <Pressable onPress={() => { inputProduto.set(0); setProdutoProcurado('') }}>
                         <Text style={styleDefault.selectIconText}>X</Text>
