@@ -148,7 +148,13 @@ export default function ListaProdutos() {
                     <ScrollView
                         horizontal={false}
                     >
-                        <Titulo checkbox={checkbox} />
+                        <Titulo
+                            checkbox={checkbox}
+                            setOrdenarPor={setOrdenarPor}
+                            setOrdemCrescente={setOrdemCrescente}
+                            ordenarPor={ordenarPor}
+                            ordemCrescente={ordemCrescente}
+                        />
                         {produtosOrdenados.map((produto) =>
                             (
                                 nomeProcurado.length < 3 ||
