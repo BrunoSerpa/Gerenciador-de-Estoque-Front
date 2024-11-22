@@ -10,8 +10,8 @@ import ICheckbox from "./interface";
 import { Checkbox, InputData } from "../../inputs";
 
 interface Props {
-    id_produto: number
-}
+    id_produto: number;
+};
 
 export default function ListaItens(item: Props) {
     const [produtos, setProdutos] = useState<VisualizarItem[] | undefined>(undefined);
@@ -27,10 +27,11 @@ export default function ListaItens(item: Props) {
         setRefresh(false);
     }, [refresh]);
 
-    const [showData, setShowData] = useState(true)
-    const [showExcluir, setShowExcluir] = useState(true)
-    const [showID, setShowID] = useState(true)
-    const [showPreco, setShowPreco] = useState(true)
+    const [showData, setShowData] = useState(true);
+    const [showExcluir, setShowExcluir] = useState(true);
+    const [showID, setShowID] = useState(true);
+    const [showPreco, setShowPreco] = useState(true);
+
     const checkbox: ICheckbox = {
         Data: showData,
         Excluir: showExcluir,
@@ -40,6 +41,30 @@ export default function ListaItens(item: Props) {
 
     const [dataInicio, setDataInicio] = useState<Date | undefined>(undefined);
     const [dataFim, setDataFim] = useState<Date | undefined>(undefined);
+    const [ordenarPor, setOrdenarPor] = useState<keyof VisualizarItem>("id");
+    const [ordemCrescente, setOrdemCrescente] = useState(true);
+    
+    const ordenarItens = (a: VisualizarItem, b: VisualizarItem) => {
+        
+        if (!(ordenarPor in a) || !(ordenarPor in b)) {
+            console.error(`Coluna inválida: ${ordenarPor}`);
+            return 0;
+        }
+    
+        let valorA: any = a[ordenarPor];
+        let valorB: any = b[ordenarPor];
+
+        if (ordenarPor === "data_compra") {
+            valorA = new Date(valorA).getTime();
+            valorB = new Date(valorB).getTime();
+        }
+    
+        if (valorA < valorB) return ordemCrescente ? -1 : 1;
+        if (valorA > valorB) return ordemCrescente ? 1 : -1;
+        return 0;
+    };
+    
+
     return (
         produtos === undefined ?
             <Carregando />
@@ -64,8 +89,14 @@ export default function ListaItens(item: Props) {
                     <ScrollView
                         horizontal={false}
                     >
-                        <Titulo checkbox={checkbox} />
-                        {produtos.map((produto) =>
+                        <Titulo
+                            checkbox={checkbox}
+                            setOrdenarPor={setOrdenarPor}
+                            setOrdemCrescente={setOrdemCrescente}
+                            ordenarPor={ordenarPor}
+                            ordemCrescente={ordemCrescente}
+                        />
+                        {produtos.sort(ordenarItens).map((produto) =>
                             (dataInicio ? new Date(produto.data_compra).getTime() >= dataInicio.getTime() : true) &&
                             (dataFim ? new Date(produto.data_compra).getTime() <= dataFim.getTime() : true) &&
                             <Item
