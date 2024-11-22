@@ -9,7 +9,7 @@ const styleDefault = StyleSheet.create({
     },
 
     widthNomes: {
-        width: 250
+        width: 142
     },
 
     widthTitulo: {
@@ -17,36 +17,36 @@ const styleDefault = StyleSheet.create({
     },
 
     widthPreco: {
-        width: 100
+        width: 126
     },
 
     widthTotal: {
-        width: 110
+        width: 132
     },
 
     widthQuantidade: {
-        width: 150
+        width: 190
     },
 
     widthGarantia: {
-        width: 100
+        width: 156
     },
 
     widthData: {
-        width: 110
+        width: 150
     },
 
 
     widthId: {
-        width: 50
+        width: 85
     },
 
     widthValidade: {
-        width: 100
+        width: 156
     },
 
     widthMarca: {
-        width: 300
+        width: 132
     },
 
     widthFuncoes: {
@@ -94,7 +94,17 @@ export const styleTitulo = StyleSheet.create({
     textTitulo: {
         ...textoStyle.texto2,
         textAlign: 'center',
-        fontWeight: 500,
+        display: 'flex',
+        verticalAlign: 'top',
+        fontWeight: '500',
+        flexWrap: 'wrap',
+        margin: 5,
+    },
+    viewTitulo:{
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
         margin: 5,
     },
     ...styleDefault
