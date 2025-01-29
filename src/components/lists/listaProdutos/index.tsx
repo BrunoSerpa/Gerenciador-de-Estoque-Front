@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { listarProdutos } from "../../../services";
 import { VisualizarProduto } from "../../../interface/Produto";
@@ -10,6 +10,7 @@ import ListaItem from "../../../pages/listaItem";
 import { useFocusEffect } from "@react-navigation/native";
 import ICheckbox from "./interface";
 import { Checkbox, InputPesquisa } from "../../inputs";
+import { Picker } from "@react-native-picker/picker";
 
 export default function ListaProdutos() {
     const [produtos, setProdutos] = useState<VisualizarProduto[] | undefined>(undefined);
@@ -65,6 +66,60 @@ export default function ListaProdutos() {
 
     const [nomeProcurado, setNomeProcurado] = useState('')
     const [marcaProcurada, setMarcaProcurada] = useState('')
+
+    const [ordenarPor, setOrdenarPor] = useState<'nome' | 'preco' | 'quantidade' | 'garantia' | 'validade' | 'marca'>('nome');
+    const [ordemCrescente, setOrdemCrescente] = useState(true);
+
+    const [nomesSelecionados, setNomesSelecionados] = useState<{ [idProduto: number]: string }>({});
+
+    const atualizarNomeSelecionado = (idProduto: number, nome: string) => {
+        setNomesSelecionados((prevState) => ({
+            ...prevState,
+            [idProduto]: nome,
+        }));
+    };
+    const ordenarProdutos = (produtos: VisualizarProduto[]) => {
+        if (!ordenarPor) return produtos;
+
+        return [...produtos].sort((a, b) => {
+            let valorA, valorB;
+
+            switch (ordenarPor) {
+                case 'nome':
+                    valorA = nomesSelecionados[a.id]?.toUpperCase() || '';
+                    valorB = nomesSelecionados[b.id]?.toUpperCase() || '';
+                    break;
+                case 'preco':
+                    valorA = a.preco ? parseFloat(a.preco.toString().replace('$', '')) : 0;
+                    valorB = b.preco ? parseFloat(b.preco.toString().replace('$', '')) : 0;
+                    break;
+                case 'quantidade':
+                    valorA = a.quantidade || 0;
+                    valorB = b.quantidade || 0;
+                    break;
+                case 'garantia':
+                    valorA = a.garantia || 0;
+                    valorB = b.garantia || 0;
+                    break;
+                case 'validade':
+                    valorA = a.validade ? new Date(a.validade).getTime() : 0;
+                    valorB = b.validade ? new Date(b.validade).getTime() : 0;
+                    break;
+                case 'marca':
+                    valorA = a.marca?.nome.toUpperCase() || '';
+                    valorB = b.marca?.nome.toUpperCase() || '';
+                    break;
+                default:
+                    return 0;
+            }
+
+            if (valorA < valorB) return ordemCrescente ? -1 : 1;
+            if (valorA > valorB) return ordemCrescente ? 1 : -1;
+            return 0;
+        });
+    };
+    const produtosOrdenados = produtos ? ordenarProdutos(produtos) : [];
+
     return (
         produtos === undefined ?
             <Carregando />
@@ -103,8 +158,14 @@ export default function ListaProdutos() {
                     <ScrollView
                         horizontal={false}
                     >
-                        <Titulo checkbox={checkbox} />
-                        {produtos.map((produto) =>
+                        <Titulo
+                            checkbox={checkbox}
+                            setOrdenarPor={setOrdenarPor}
+                            setOrdemCrescente={setOrdemCrescente}
+                            ordenarPor={ordenarPor}
+                            ordemCrescente={ordemCrescente}
+                        />
+                        {produtosOrdenados.map((produto) =>
                             (
                                 nomeProcurado.length < 3 ||
                                 produto.nomes.find((nome) => nome.nome.toUpperCase().includes(nomeProcurado.toUpperCase()))
@@ -114,11 +175,13 @@ export default function ListaProdutos() {
                                 produto.marca?.nome.toUpperCase().includes(marcaProcurada.toUpperCase())
                             ) &&
                             <Item
+                                key={produto.id}
                                 produto={produto}
                                 setRefresh={setRefresh}
                                 setListarItens={setListarItens}
-                                key={produto.id}
                                 checkbox={checkbox}
+                                nomesSelecionados={nomesSelecionados}
+                                atualizarNomeSelecionado={atualizarNomeSelecionado}
                             />
                         )}
                     </ScrollView>

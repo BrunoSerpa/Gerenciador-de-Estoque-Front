@@ -50,12 +50,65 @@ export default function ListaCadastros() {
         Data: showData,
         Total: showTotal,
         Funcoes: showFuncoes,
-    }
+    };
 
-    const [tituloProcurado, setTituloProcurado] = useState('')
+    const [tituloProcurado, setTituloProcurado] = useState('');
 
-    const [showFiltroHistorico, setShowFiltroHistorico] = useState(false)
-    const [tipoHistorico, setTipoHistorico] = useState(0)
+    const [showFiltroHistorico, setShowFiltroHistorico] = useState(false);
+    const [tipoHistorico, setTipoHistorico] = useState(0);
+
+    const dadosCombinados = cadastros && vendas ? [...cadastros, ...vendas] : [];
+
+    const [ordenarPor, setOrdenarPor] = useState<'titulo' | 'data' | 'total'>('titulo');
+    const [ordemCrescente, setOrdemCrescente] = useState(true);
+
+    const ordenarDados = (dados: (VisualizarCadastro | VisualizarVenda)[]) => {
+        return dados.sort((a, b) => {
+            let valorA: string | number | Date = '';
+            let valorB: string | number | Date = '';
+
+            if (ordenarPor === 'titulo') {
+                valorA = a.titulo;
+                valorB = b.titulo;
+            } else if (ordenarPor === 'data') {
+                valorA = 'data_cadastro' in a ? a.data_cadastro : a.data_venda;
+                valorB = 'data_cadastro' in b ? b.data_cadastro : b.data_venda;
+            } else if (ordenarPor === 'total') {
+                valorA = a.total;
+                valorB = b.total;
+            }
+
+            if (typeof valorA === 'string' && typeof valorB === 'string') {
+                return ordemCrescente
+                    ? valorA.toUpperCase().localeCompare(valorB.toUpperCase())
+                    : valorB.toUpperCase().localeCompare(valorA.toUpperCase());
+            }
+
+            if (ordenarPor === 'data') {
+                if (valorA instanceof Date && valorB instanceof Date) {
+                    return ordemCrescente
+                        ? new Date(valorA).getTime() - new Date(valorB).getTime()
+                        : new Date(valorB).getTime() - new Date(valorA).getTime();
+                }
+            }
+
+            if (ordenarPor === 'total') {
+                if (typeof valorA === 'number' && typeof valorB === 'number') {
+                    return ordemCrescente ? valorA - valorB : valorB - valorA;
+                }
+            }
+
+            return 0;
+        });
+    };
+
+
+    const dadosFiltrados = dadosCombinados.filter(item => {
+        return tituloProcurado.length < 3 || item.titulo.toUpperCase().includes(tituloProcurado.toUpperCase());
+    });
+
+    const dadosOrdenados = ordenarDados(dadosFiltrados);
+
     return (
         (cadastros === undefined || vendas === undefined) ?
             <Carregando />
@@ -80,36 +133,39 @@ export default function ListaCadastros() {
                         <Checkbox set={setShowTotal} status={showTotal} titulo="Mostrar Total" />
                         <Checkbox set={setShowFuncoes} status={showFuncoes} titulo="Mostrar Funções" />
                     </View>
-
                 </View>
-                <ScrollView
-                    style={styleLista.scrollView}
-                    horizontal={true}
-                >
-                    <ScrollView
-                        horizontal={false}
-                    >
-                        <Titulo checkbox={checkbox} />
-                        {(!showFiltroHistorico || tipoHistorico === 0) &&
-                            cadastros.map((cadastro) => (
-                                (tituloProcurado.length < 3 || cadastro.titulo.toUpperCase().includes(tituloProcurado.toUpperCase())) &&
-                                <ItemCadastro
-                                    cadastro={cadastro}
-                                    setRefresh={setRefresh}
-                                    key={cadastro.id}
-                                    checkbox={checkbox}
-                                />
-                            ))}
-                        {(!showFiltroHistorico || tipoHistorico === 1) &&
-                            vendas.map((venda) => (
-                                (tituloProcurado.length < 3 || venda.titulo.toUpperCase().includes(tituloProcurado.toUpperCase())) &&
-                                <ItemVenda
-                                    venda={venda}
-                                    setRefresh={setRefresh}
-                                    key={venda.id}
-                                    checkbox={checkbox}
-                                />
-                            ))}
+                <ScrollView style={styleLista.scrollView} horizontal={true}>
+                    <ScrollView horizontal={false}>
+                        <Titulo
+                            checkbox={checkbox}
+                            setOrdenarPor={setOrdenarPor}
+                            setOrdemCrescente={setOrdemCrescente}
+                            ordenarPor={ordenarPor}
+                            ordemCrescente={ordemCrescente}
+                        />
+                        {dadosOrdenados.map((item, index) => {
+                            if ('data_cadastro' in item) {
+                                return (
+                                    <ItemCadastro
+                                        cadastro={item as VisualizarCadastro}
+                                        setRefresh={setRefresh}
+                                        key={index}
+                                        checkbox={checkbox}
+                                    />
+                                );
+                            }
+                            if ('data_venda' in item) {
+                                return (
+                                    <ItemVenda
+                                        venda={item as VisualizarVenda}
+                                        setRefresh={setRefresh}
+                                        key={index}
+                                        checkbox={checkbox}
+                                    />
+                                );
+                            }
+                            return null;
+                        })}
                     </ScrollView>
                 </ScrollView>
             </>

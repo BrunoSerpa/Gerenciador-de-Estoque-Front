@@ -10,53 +10,55 @@ import ICheckbox from "./interface";
 interface Props {
     produto: VisualizarProduto;
     setRefresh: (refresh: boolean) => void;
-    setListarItens: (listarItens: {
-        id: number
-        nome: string
-    }) => void;
-    checkbox: ICheckbox
+    setListarItens: (listarItens: { id: number; nome: string }) => void;
+    checkbox: ICheckbox;
+    nomesSelecionados: {
+        [idProduto: number]: string;
+    };
+    atualizarNomeSelecionado: (idProduto: number, nome: string) => void;
 }
-export default function Item(item: Props) {
-    const [nomeSelecionado, setNomeSelecionado] = useState({
-        id: 0,
-        nome: ''
-    });
 
+export default function Item(item: Props) {
     const selecionarNomeRef = useRef<Picker<number> | null>(null);
 
     const handleNomeChange = (itemId: number) => {
-        const nome = item.produto.nomes.find(n => n.id === itemId);
+        const nome = item.produto.nomes.find((n) => n.id === itemId);
         if (nome) {
-            setNomeSelecionado(nome);
+            item.atualizarNomeSelecionado(item.produto.id, nome.nome);
         }
     };
 
     useEffect(() => {
-        if (item.produto.nomes && item.produto.nomes.length > 0) {
-            setNomeSelecionado(item.produto.nomes[0]);
+        const nomeInicial = item.produto.nomes[0]?.nome || '';
+        if (!item.nomesSelecionados[item.produto.id]) {
+            item.atualizarNomeSelecionado(item.produto.id, nomeInicial);
         }
-    }, [item.produto.nomes]);
+    }, [item.produto.nomes, item.nomesSelecionados]);
 
     const deletarProduto = async () => {
-        const excluir = await excluirProduto(item.produto.id)
+        const excluir = await excluirProduto(item.produto.id);
         console.log(excluir);
         item.setRefresh(true);
-    }
-
+    };
 
     return (
         <View style={styleItem.viewLinha}>
             <View style={styleItem.separator} />
             {item.checkbox.Nomes && <>
-                <TouchableWithoutFeedback onPress={() => selecionarNomeRef.current?.focus()}>
+                <TouchableWithoutFeedback
+                    onPress={() => selecionarNomeRef.current?.focus()}
+                >
                     <Text style={[styleItem.textItem, styleItem.widthNomes]}>
-                        {nomeSelecionado.nome}
+                        {item.nomesSelecionados[item.produto.id] || ''}
                     </Text>
                 </TouchableWithoutFeedback>
 
                 <Picker
                     ref={selecionarNomeRef}
-                    selectedValue={nomeSelecionado.id}
+                    selectedValue={item.produto.nomes.find(
+                        (n) =>
+                            n.nome === item.nomesSelecionados[item.produto.id]
+                    )?.id}
                     onValueChange={(itemValue) => handleNomeChange(itemValue)}
                     style={styleItem.dropdownNome}
                 >
@@ -92,7 +94,7 @@ export default function Item(item: Props) {
                 <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
                     <Pressable onPress={() => item.setListarItens({
                         id: item.produto.id,
-                        nome: nomeSelecionado.nome
+                        nome: item.nomesSelecionados[item.produto.id]
                     })}>
                         <Image
                             source={require("../../../../assets/items.png")}
