@@ -23,10 +23,22 @@ export default function FormsAtualizarVenda(formsAtualizarVenda: Props) {
     const [dataVenda, setDataVenda] = useState(new Date());
     const [produtos, setProdutos] = useState<PropsProduto[]>([]);
     const [frete, setFrete] = useState('');
+    const [erro, setErro] = useState('');
+    const [sucesso, setSucesso] = useState('');
+
+    useEffect(() => {
+        listar();
+    }, [formsAtualizarVenda.idVenda]);
+
+    useEffect(() => {
+        if (erro === 'Venda atualizado com sucesso') {
+            setSucesso(erro);
+            setErro('');
+        }
+    }, [erro]);
 
     const listar = async () => {
         const resposta = await listarVenda(formsAtualizarVenda.idVenda);
-        console.log(resposta)
         const venda = resposta.data.rows[0];
         setTitulo(venda.titulo);
         setDataVenda(new Date(venda.data_venda));
@@ -35,50 +47,35 @@ export default function FormsAtualizarVenda(formsAtualizarVenda: Props) {
             id_produto: number;
             preco_venda: string;
             quantidade: string;
-        }) => {
-            return {
-                idProduto: item.id_produto,
-                preco: item.preco_venda,
-                quantidade: item.quantidade
-            };
-        });
+        }) => ({
+            idProduto: item.id_produto,
+            preco: item.preco_venda,
+            quantidade: item.quantidade
+        }));
         setProdutos(produtos);
-        console.log(produtos);
     };
 
     const deletarVenda = async () => {
-        const excluir = await excluirVenda(formsAtualizarVenda.idVenda)
-        console.log(excluir);
+        await excluirVenda(formsAtualizarVenda.idVenda);
         navigateTo('Histórico de Cadastro');
     };
 
-    useEffect(() => {
-        listar();
-    }, [formsAtualizarVenda.idVenda]);
-
-    const [erro, setErro] = useState('');
-    const [sucesso, setSucesso] = useState('');
-
     const setPreco = (index: number, preco: string) => {
-        setProdutos((prevProdutos) => {
-            const updatedProdutos = [...prevProdutos];
-            updatedProdutos[index].preco = preco;
-            return updatedProdutos;
-        });
+        updateProduto(index, { preco });
     };
 
     const setIdProduto = (index: number, idProduto: number) => {
-        setProdutos((prevProdutos) => {
-            const updatedProdutos = [...prevProdutos];
-            updatedProdutos[index].idProduto = idProduto;
-            return updatedProdutos;
-        });
+        updateProduto(index, { idProduto });
     };
 
     const setQuantidade = (index: number, quantidade: string) => {
+        updateProduto(index, { quantidade });
+    };
+
+    const updateProduto = (index: number, updatedFields: Partial<PropsProduto>) => {
         setProdutos((prevProdutos) => {
             const updatedProdutos = [...prevProdutos];
-            updatedProdutos[index].quantidade = quantidade;
+            updatedProdutos[index] = { ...updatedProdutos[index], ...updatedFields };
             return updatedProdutos;
         });
     };
@@ -86,11 +83,7 @@ export default function FormsAtualizarVenda(formsAtualizarVenda: Props) {
     const adicionarProduto = () => {
         setProdutos((prevProdutos) => [
             ...prevProdutos,
-            {
-                idProduto: 0,
-                preco: '',
-                quantidade: '1'
-            },
+            { idProduto: 0, preco: '', quantidade: '1' },
         ]);
     };
 
@@ -98,69 +91,51 @@ export default function FormsAtualizarVenda(formsAtualizarVenda: Props) {
         setProdutos((prevProdutos) => prevProdutos.filter((_, i) => i !== index));
     };
 
+    const validarProdutos = () => {
+        let isValid = true;
+        produtos.forEach((produto, index) => {
+            if (produto.idProduto === 0) {
+                setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
+                isValid = false;
+            }
+            if (produto.preco === '') {
+                setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
+                isValid = false;
+            }
+            if (produto.quantidade === '' || produto.quantidade === '0') {
+                setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
+                isValid = false;
+            }
+        });
+        return isValid;
+    };
+
     const atualizar = async () => {
         setErro('');
         setSucesso('');
-        let atualizar = true;
-        for (let index = 0; index < produtos.length; index++) {
-            const produto = produtos[index];
-            if (produto.idProduto === 0) {
-                setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
-                atualizar = false;
-            };
-
-            if (produto.preco === '') {
-                setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
-                atualizar = false;
-            };
-
-            if (produto.quantidade === '' || produto.quantidade === '0') {
-                setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
-                atualizar = false;
-            };
-        };
 
         if (!dataVenda) {
             setErro(prev => prev + 'Insira uma data de venda; ');
-            atualizar = false;
-        };
-
-
-        if (atualizar === true) {
-            const itens = []
-            if (produtos) {
-                for (let index = 0; index < produtos.length; index++) {
-                    const produto = produtos[index];
-                    const item = {
-                        id_produto: produto.idProduto,
-                        preco: Number(produto.preco.replace(',', '.'))
-                    }
-                    for (var i = 0; i < Number(produto.quantidade); i++) {
-                        itens.push(item)
-                    };
-                };
-            };
-
-            const atualiza = {
-                data_venda: dataVenda,
-                frete: frete ? Number(frete.replace(',', '.')) : 0,
-                titulo: titulo,
-                itens: itens
-            };
-
-            console.log(atualiza)
-            const resposta = await atualizarVenda(atualiza, formsAtualizarVenda.idVenda);
-            console.log(resposta);
-            setErro(resposta.msg);
-        };
-    };
-
-    useEffect(() => {
-        if (erro == 'Venda atualizado com sucesso') {
-            setSucesso(erro)
-            setErro('')
+            return;
         }
-    }, [erro])
+
+        if (!validarProdutos()) return;
+
+        const itens = produtos.flatMap(produto => Array(Number(produto.quantidade)).fill({
+            id_produto: produto.idProduto,
+            preco: Number(produto.preco.replace(',', '.'))
+        }));
+
+        const atualiza = {
+            data_venda: dataVenda,
+            frete: frete ? Number(frete.replace(',', '.')) : 0,
+            titulo: titulo,
+            itens: itens
+        };
+
+        const resposta = await atualizarVenda(atualiza, formsAtualizarVenda.idVenda);
+        setErro(resposta.msg);
+    };
 
     return (
         <View>
@@ -246,4 +221,4 @@ export default function FormsAtualizarVenda(formsAtualizarVenda: Props) {
             <Text style={styleForms.textSucesso}>{sucesso}</Text>
         </View>
     );
-};
+}
