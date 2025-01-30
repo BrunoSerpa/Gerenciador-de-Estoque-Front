@@ -23,10 +23,22 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
     const [dataCadastro, setDataCadastro] = useState(new Date());
     const [produtos, setProdutos] = useState<PropsProduto[]>([]);
     const [frete, setFrete] = useState('');
+    const [erro, setErro] = useState('');
+    const [sucesso, setSucesso] = useState('');
+
+    useEffect(() => {
+        listar();
+    }, [formsAtualizarCadastro.idCadastro]);
+
+    useEffect(() => {
+        if (erro === 'Cadastro atualizado com sucesso') {
+            setSucesso(erro);
+            setErro('');
+        }
+    }, [erro]);
 
     const listar = async () => {
         const resposta = await listarCadastro(formsAtualizarCadastro.idCadastro);
-        console.log(resposta)
         const cadastro = resposta.data.rows[0];
         setTitulo(cadastro.titulo);
         setDataCadastro(new Date(cadastro.data_cadastro));
@@ -35,29 +47,18 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
             id_produto: number;
             preco: string;
             quantidade: string;
-        }) => {
-            return {
-                idProduto: item.id_produto,
-                preco: item.preco,
-                quantidade: item.quantidade
-            };
-        });
+        }) => ({
+            idProduto: item.id_produto,
+            preco: item.preco,
+            quantidade: item.quantidade
+        }));
         setProdutos(produtos);
-        console.log(produtos);
     };
 
     const deletarCadastro = async () => {
-        const excluir = await excluirCadastro(formsAtualizarCadastro.idCadastro)
-        console.log(excluir);
+        await excluirCadastro(formsAtualizarCadastro.idCadastro);
         navigateTo('Histórico de Cadastro');
     };
-
-    useEffect(() => {
-        listar();
-    }, [formsAtualizarCadastro.idCadastro]);
-
-    const [erro, setErro] = useState('');
-    const [sucesso, setSucesso] = useState('');
 
     const setPreco = (index: number, preco: string) => {
         setProdutos((prevProdutos) => {
@@ -98,69 +99,53 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
         setProdutos((prevProdutos) => prevProdutos.filter((_, i) => i !== index));
     };
 
+    const validarProdutos = () => {
+        let valido = true;
+        produtos.forEach((produto, index) => {
+            if (produto.idProduto === 0) {
+                setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
+                valido = false;
+            }
+            if (produto.preco === '') {
+                setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
+                valido = false;
+            }
+            if (produto.quantidade === '' || produto.quantidade === '0') {
+                setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
+                valido = false;
+            }
+        });
+        return valido;
+    };
+
     const atualizar = async () => {
         setErro('');
         setSucesso('');
-        let atualizar = true;
-        for (let index = 0; index < produtos.length; index++) {
-            const produto = produtos[index];
-            if (produto.idProduto === 0) {
-                setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
-                atualizar = false;
-            };
-
-            if (produto.preco === '') {
-                setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
-                atualizar = false;
-            };
-
-            if (produto.quantidade === '' || produto.quantidade === '0') {
-                setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
-                atualizar = false;
-            };
-        };
 
         if (!dataCadastro) {
-            setErro(prev => prev + 'Insira uma data de cadastro; ');
-            atualizar = false;
-        };
-
-
-        if (atualizar === true) {
-            const itens = []
-            if (produtos) {
-                for (let index = 0; index < produtos.length; index++) {
-                    const produto = produtos[index];
-                    const item = {
-                        id_produto: produto.idProduto,
-                        preco: Number(produto.preco.replace(',', '.'))
-                    }
-                    for (var i = 0; i < Number(produto.quantidade); i++) {
-                        itens.push(item)
-                    };
-                };
-            };
-
-            const atualiza = {
-                data_cadastro: dataCadastro,
-                frete: frete ? Number(frete.replace(',', '.')) : 0,
-                titulo: titulo,
-                itens: itens
-            };
-
-            console.log(atualiza)
-            const resposta = await atualizarCadastro(atualiza, formsAtualizarCadastro.idCadastro);
-            console.log(resposta);
-            setErro(resposta.msg);
-        };
-    };
-
-    useEffect(() => {
-        if (erro == 'Cadastro atualizado com sucesso') {
-            setSucesso(erro)
-            setErro('')
+            setErro('Insira uma data de cadastro; ');
+            return;
         }
-    }, [erro])
+
+        if (!validarProdutos()) return;
+
+        const itens = produtos.flatMap(produto => 
+            Array(Number(produto.quantidade)).fill({
+                id_produto: produto.idProduto,
+                preco: Number(produto.preco.replace(',', '.'))
+            })
+        );
+
+        const atualiza = {
+            data_cadastro: dataCadastro,
+            frete: frete ? Number(frete.replace(',', '.')) : 0,
+            titulo: titulo,
+            itens: itens
+        };
+
+        const resposta = await atualizarCadastro(atualiza, formsAtualizarCadastro.idCadastro);
+        setErro(resposta.msg);
+    };
 
     return (
         <View>
