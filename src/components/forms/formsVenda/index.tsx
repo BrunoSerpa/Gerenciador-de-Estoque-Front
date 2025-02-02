@@ -67,12 +67,10 @@ export default function FormsVenda() {
 
     const cadastrar = async () => {
         setErro('');
-        setSucesso('')
+        setSucesso('');
         let cadastrar = true;
 
-
-        for (let index = 0; index < produtos.length; index++) {
-            const produto = produtos[index];
+        const validarProduto = (produto: PropsProduto, index: number) => {
             if (produto.idProduto === 0) {
                 setErro(prev => prev + `Escolha um produto na linha ${index + 1}; `);
                 cadastrar = false;
@@ -81,45 +79,38 @@ export default function FormsVenda() {
                 setErro(prev => prev + `Insira um preço para o produto da linha ${index + 1}; `);
                 cadastrar = false;
             }
-
             if (produto.quantidade === '' || produto.quantidade === '0') {
                 setErro(prev => prev + `Insira uma quantidade maior que 0 para o produto da linha ${index + 1}; `);
                 cadastrar = false;
             }
-        }
+        };
+
+        produtos.forEach(validarProduto);
 
         if (!dataVenda) {
             setErro(prev => prev + 'Insira uma data de venda; ');
             cadastrar = false;
         }
 
-
-        if (cadastrar === true) {
-            const itens = []
-            if (produtos) {
-                for (let index = 0; index < produtos.length; index++) {
-                    const produto = produtos[index];
-                    const item = {
-                        id_produto: produto.idProduto,
-                        preco: Number(produto.preco.replace(',', '.'))
-                    }
-                    for (var i = 0; i < Number(produto.quantidade); i++) {
-                        itens.push(item)
-                    }
-
-                }
-            }
+        if (cadastrar) {
+            const itens = produtos.flatMap(produto => {
+                const item = {
+                    id_produto: produto.idProduto,
+                    preco: Number(produto.preco.replace(',', '.'))
+                };
+                return Array(Number(produto.quantidade)).fill(item);
+            });
 
             const venda = {
                 data_venda: dataVenda,
                 frete: Number(frete.replace(',', '.')),
                 titulo: titulo,
                 itens: itens
-            }
+            };
 
             const resposta = await cadastrarVenda(venda);
             console.log(resposta);
-            setErro(resposta.msg)
+            setErro(resposta.msg);
         }
     };
 
