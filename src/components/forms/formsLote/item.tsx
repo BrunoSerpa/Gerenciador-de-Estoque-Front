@@ -15,13 +15,19 @@ interface Props {
     setQuantidade: (index: number, quantidade: string) => void
 }
 
-export default function ItemLote(itemLote: Props) {
+export default function ItemLote({
+    index,
+    produto,
+    setIdProduto,
+    setPreco,
+    setQuantidade
+}: Readonly<Props>) {
     return (
         <View style={styleItens.viewLinha}>
             <View style={styleItens.widthProduto}>
                 <InputProduto
-                    id_nome={itemLote.produto.idProduto}
-                    set={(id) => itemLote.setIdProduto(itemLote.index, id)}
+                    id_nome={produto.idProduto}
+                    set={(id) => setIdProduto(index, id)}
                     idInicial={0}
                     title={false}
                 />
@@ -34,8 +40,8 @@ export default function ItemLote(itemLote: Props) {
                     marcacao="R$"
                     obrigatorio
                     placeholder="0,00"
-                    set={(preco) => itemLote.setPreco(itemLote.index, preco)}
-                    text={itemLote.produto.preco}
+                    set={(preco) => setPreco(index, preco)}
+                    text={produto.preco}
                 />
             </View>
             <View style={styleItens.separator} />
@@ -44,8 +50,8 @@ export default function ItemLote(itemLote: Props) {
                     keyboardType="numeric"
                     obrigatorio
                     placeholder="0"
-                    set={(quantidade) => itemLote.setQuantidade(itemLote.index, quantidade)}
-                    text={itemLote.produto.quantidade}
+                    set={(quantidade) => setQuantidade(index, quantidade)}
+                    text={produto.quantidade}
                 />
             </View>
         </View>
