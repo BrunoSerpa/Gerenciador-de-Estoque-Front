@@ -12,7 +12,6 @@ interface Props {
     refresh: number;
 }
 
-
 export default function InputMarca(inputMarca: Props) {
     const novaMarcaRef = useRef<TextInput>(null);
     const [marcaProcurada, setMarcaProcurada] = useState('');
@@ -102,11 +101,10 @@ export default function InputMarca(inputMarca: Props) {
         }
     };
 
-    
     useEffect(() => {
         fetchMarcas();
     }, [inputMarca.refresh]);
-    
+
     useFocusEffect(
         useCallback(() => {
             fetchMarcas();
@@ -153,7 +151,7 @@ export default function InputMarca(inputMarca: Props) {
 
             {marcaProcurada &&
                 <ScrollView style={styleDefault.viewLista}>
-                    {marcasExistentes.map((marca, index) =>
+                    {marcasExistentes.map((marca) =>
                         removerAcentos(marca.nome).toUpperCase().includes(removerAcentos(marcaProcurada).toUpperCase()) &&
                         <Pressable
                             onPress={() => inputMarca.set(marca.id)}
