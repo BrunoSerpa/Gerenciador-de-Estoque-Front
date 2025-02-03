@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View } from "react-native";
 import { InputDefault, InputProduto } from "../../inputs";
 import { styleItens } from "../style";
