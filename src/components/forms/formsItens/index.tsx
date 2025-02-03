@@ -50,7 +50,7 @@ export default function FormsItens(forms: Props) {
                 preco: Number(preco.replace(',', '.'))
             }
             const itens = []
-            for (var i = 0; i < Number(quantidade); i++) {
+            for (let i = 0; i < Number(quantidade); i++) {
                 itens.push(item)
             }
 
