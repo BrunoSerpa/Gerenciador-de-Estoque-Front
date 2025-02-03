@@ -16,7 +16,7 @@ export default function RadioButton(radiobutton: Props) {
             </View>
             <View style={styleDefault.viewRadiobuttonPrincipal}>
                 {radiobutton.subtitulos.map((subtitulo, index) =>
-                    <View style={styleDefault.viewRadiobutton} key={index}>
+                    <View style={styleDefault.viewRadiobutton} key={subtitulo}>
                         <Pressable onPress={() => radiobutton.set(index)}>
                             <View
                                 style={radiobutton.status !== index ?

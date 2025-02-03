@@ -87,7 +87,7 @@ export default function InputNomes(inputNomes: Props) {
                             <Pressable
                                 onPress={() => selecionarNome(nome)}
                                 style={styleDefault.viewItemLista}
-                                key={index}
+                                key={nome}
                             >
                                 <Text style={styleDefault.nomeItem}>{nome}</Text>
                                 <Pressable onPress={(e) => { e.stopPropagation(); deletarNome(nome); }}>

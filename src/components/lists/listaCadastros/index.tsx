@@ -141,7 +141,7 @@ export default function ListaCadastros() {
                                     <ItemCadastro
                                         cadastro={item as VisualizarCadastro}
                                         setRefresh={setRefresh}
-                                        key={index}
+                                        key={item.id}
                                         checkbox={checkbox}
                                     />
                                 );
@@ -151,7 +151,7 @@ export default function ListaCadastros() {
                                     <ItemVenda
                                         venda={item as VisualizarVenda}
                                         setRefresh={setRefresh}
-                                        key={index}
+                                        key={item.id}
                                         checkbox={checkbox}
                                     />
                                 );

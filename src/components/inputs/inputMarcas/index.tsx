@@ -158,7 +158,7 @@ export default function InputMarca(inputMarca: Props) {
                         <Pressable
                             onPress={() => inputMarca.set(marca.id)}
                             style={styleDefault.viewItemLista}
-                            key={index}
+                            key={marca.id}
                         >
                             {destacarPalavra(marca.nome, marcaProcurada)}
                         </Pressable>

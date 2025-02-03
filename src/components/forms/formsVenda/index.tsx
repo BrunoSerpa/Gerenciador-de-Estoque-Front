@@ -153,7 +153,7 @@ export default function FormsVenda() {
                 <TítuloLote />
                 <View>
                     {produtos.map((produto, index) => (
-                        <View key={index} style={styleForms.viewFlex}>
+                        <View key={`id: ${produto.idProduto} preco:${produto.preco}`} style={styleForms.viewFlex}>
                             <ItemLote
                                 produto={produto}
                                 index={index}

@@ -165,7 +165,7 @@ export default function InputProduto(inputProduto: Props) {
 
             {produtoProcurado && inputProduto.id_nome === 0 && (
                 <ScrollView style={styleDefault.viewLista}>
-                    {produtosExistentes.map((produto, index) =>
+                    {produtosExistentes.map((produto) =>
                         removerAcentos(produto.nome).toUpperCase().includes(removerAcentos(produtoProcurado).toUpperCase()) && (
                             <Pressable
                                 onPress={() => {
@@ -173,7 +173,7 @@ export default function InputProduto(inputProduto: Props) {
                                     setProdutoProcurado(produto.nome);
                                 }}
                                 style={styleDefault.viewItemLista}
-                                key={`${index}`}
+                                key={produto.id}
                             >
                                 {destacarPalavra(produto.nome, produtoProcurado)}
                             </Pressable>
