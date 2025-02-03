@@ -44,7 +44,7 @@ export default function Item(item: Props) {
     return (
         <View style={styleItem.viewLinha}>
             <View style={styleItem.separator} />
-            {item.checkbox.Nomes && <>
+            {item.checkbox.Nomes && <View>
                 <TouchableWithoutFeedback
                     onPress={() => selecionarNomeRef.current?.focus()}
                 >
@@ -67,30 +67,30 @@ export default function Item(item: Props) {
                     ))}
                 </Picker>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Preco && <>
+            </View>}
+            {item.checkbox.Preco && <View>
                 <Text style={[styleItem.textItem, styleItem.widthPreco]}>R{item.produto.preco}</Text>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Quantidade && <>
+            </View>}
+            {item.checkbox.Quantidade && <View>
                 <Text style={[styleItem.textItem, styleItem.widthQuantidade]}>{item.produto.quantidade}</Text>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Garantia && <>
+            </View>}
+            {item.checkbox.Garantia && <View>
                 <Text style={[styleItem.textItem, styleItem.widthGarantia]}>{item.produto.garantia}</Text>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Validade && <>
+            </View>}
+            {item.checkbox.Validade && <View>
                 <Text style={[styleItem.textItem, styleItem.widthValidade]}>{item.produto.validade ? item.produto.validade : "-"} </Text>
                 <View style={styleItem.separator} />
-            </>}
+            </View>}
 
-            {item.checkbox.Marca && <>
+            {item.checkbox.Marca && <View>
                 <Text style={[styleItem.textItem, styleItem.widthMarca]}>{item.produto.marca &&
                     item.produto.marca.nome !== '' ? item.produto.marca.nome : 'Nenhuma'}</Text>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Itens && <>
+            </View>}
+            {item.checkbox.Itens && <View>
                 <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
                     <Pressable onPress={() => item.setListarItens({
                         id: item.produto.id,
@@ -103,8 +103,8 @@ export default function Item(item: Props) {
                     </Pressable>
                 </View>
                 <View style={styleItem.separator} />
-            </>}
-            {item.checkbox.Funcoes && <>
+            </View>}
+            {item.checkbox.Funcoes && <View>
                 <View style={[styleItem.widthFuncoes, styleItem.viewFuncoes]}>
                     <Pressable onPress={() => navigateTo('Atualizar Produto', { produtoId: item.produto.id })}>
                         <Image
@@ -123,7 +123,7 @@ export default function Item(item: Props) {
                     </Pressable>
                 </View>
                 <View style={styleItem.separator} />
-            </>}
+            </View>}
         </View>
     );
 }
