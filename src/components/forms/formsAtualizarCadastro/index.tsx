@@ -18,7 +18,7 @@ interface PropsProduto {
     quantidade: string;
 }
 
-export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
+export default function FormsAtualizarCadastro({ idCadastro }: Readonly<Props>) {
     const [titulo, setTitulo] = useState('');
     const [dataCadastro, setDataCadastro] = useState(new Date());
     const [produtos, setProdutos] = useState<PropsProduto[]>([]);
@@ -28,7 +28,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
 
     useEffect(() => {
         listar();
-    }, [formsAtualizarCadastro.idCadastro]);
+    }, [idCadastro]);
 
     useEffect(() => {
         if (erro === 'Cadastro atualizado com sucesso') {
@@ -38,7 +38,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
     }, [erro]);
 
     const listar = async () => {
-        const resposta = await listarCadastro(formsAtualizarCadastro.idCadastro);
+        const resposta = await listarCadastro(idCadastro);
         const cadastro = resposta.data.rows[0];
         setTitulo(cadastro.titulo);
         setDataCadastro(new Date(cadastro.data_cadastro));
@@ -56,7 +56,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
     };
 
     const deletarCadastro = async () => {
-        await excluirCadastro(formsAtualizarCadastro.idCadastro);
+        await excluirCadastro(idCadastro);
         navigateTo('Histórico de Cadastro');
     };
 
@@ -129,7 +129,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
 
         if (!validarProdutos()) return;
 
-        const itens = produtos.flatMap(produto => 
+        const itens = produtos.flatMap(produto =>
             Array(Number(produto.quantidade)).fill({
                 id_produto: produto.idProduto,
                 preco: Number(produto.preco.replace(',', '.'))
@@ -143,7 +143,7 @@ export default function FormsAtualizarCadastro(formsAtualizarCadastro: Props) {
             itens: itens
         };
 
-        const resposta = await atualizarCadastro(atualiza, formsAtualizarCadastro.idCadastro);
+        const resposta = await atualizarCadastro(atualiza, idCadastro);
         setErro(resposta.msg);
     };
 
