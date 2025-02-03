@@ -62,43 +62,35 @@ export default function ListaCadastros() {
     const [ordenarPor, setOrdenarPor] = useState<'titulo' | 'data' | 'total'>('titulo');
     const [ordemCrescente, setOrdemCrescente] = useState(true);
 
+    const getValor = (item: VisualizarCadastro | VisualizarVenda, key: 'titulo' | 'data' | 'total') => {
+        if (key === 'titulo') return item.titulo;
+        if (key === 'data') return 'data_cadastro' in item ? item.data_cadastro : item.data_venda;
+        if (key === 'total') return item.total;
+        return '';
+    };
+
+    const compararValores = (a: string | number | Date, b: string | number | Date) => {
+        if (typeof a === 'string' && typeof b === 'string') {
+            return ordemCrescente
+                ? a.toUpperCase().localeCompare(b.toUpperCase())
+                : b.toUpperCase().localeCompare(a.toUpperCase());
+        }
+        if (a instanceof Date && b instanceof Date) {
+            return ordemCrescente
+                ? new Date(a).getTime() - new Date(b).getTime()
+                : new Date(b).getTime() - new Date(a).getTime();
+        }
+        if (typeof a === 'number' && typeof b === 'number') {
+            return ordemCrescente ? a - b : b - a;
+        }
+        return 0;
+    };
+
     const ordenarDados = (dados: (VisualizarCadastro | VisualizarVenda)[]) => {
         return dados.sort((a, b) => {
-            let valorA: string | number | Date = '';
-            let valorB: string | number | Date = '';
-
-            if (ordenarPor === 'titulo') {
-                valorA = a.titulo;
-                valorB = b.titulo;
-            } else if (ordenarPor === 'data') {
-                valorA = 'data_cadastro' in a ? a.data_cadastro : a.data_venda;
-                valorB = 'data_cadastro' in b ? b.data_cadastro : b.data_venda;
-            } else if (ordenarPor === 'total') {
-                valorA = a.total;
-                valorB = b.total;
-            }
-
-            if (typeof valorA === 'string' && typeof valorB === 'string') {
-                return ordemCrescente
-                    ? valorA.toUpperCase().localeCompare(valorB.toUpperCase())
-                    : valorB.toUpperCase().localeCompare(valorA.toUpperCase());
-            }
-
-            if (ordenarPor === 'data') {
-                if (valorA instanceof Date && valorB instanceof Date) {
-                    return ordemCrescente
-                        ? new Date(valorA).getTime() - new Date(valorB).getTime()
-                        : new Date(valorB).getTime() - new Date(valorA).getTime();
-                }
-            }
-
-            if (ordenarPor === 'total') {
-                if (typeof valorA === 'number' && typeof valorB === 'number') {
-                    return ordemCrescente ? valorA - valorB : valorB - valorA;
-                }
-            }
-
-            return 0;
+            const valorA = getValor(a, ordenarPor);
+            const valorB = getValor(b, ordenarPor);
+            return compararValores(valorA, valorB);
         });
     };
 
@@ -113,7 +105,7 @@ export default function ListaCadastros() {
         (cadastros === undefined || vendas === undefined) ?
             <Carregando />
             :
-            <>
+            <View>
                 <View style={styleLista.viewCheckboxPrincipal}>
                     <View style={styleLista.viewCheckbox}>
                         <InputPesquisa
@@ -168,6 +160,6 @@ export default function ListaCadastros() {
                         })}
                     </ScrollView>
                 </ScrollView>
-            </>
+            </View>
     );
 };
